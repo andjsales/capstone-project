@@ -19,8 +19,6 @@ public class App {
 
     public static void main(String[] args)
             throws FileNotFoundException, IOException, ClassNotFoundException {
-
-
         try {
             Connection conn = ConnectionManager.getConnection();
             System.out.println("Connected to the database!");
@@ -34,7 +32,7 @@ public class App {
         UserDao userDao = new UserDaoImpl(); // use DAO to check login
         User loggedInUser = null; // store logged-in user info
 
-        System.out.println("===== Your Personal Watchlist =====");
+        System.out.println("\n\n===== Your Personal Watchlist =====");
 
         while (true) {
             System.out.println("\n1. Login");
@@ -73,15 +71,3 @@ public class App {
         // Next step: show menu using loggedInUser.getId()
     }
 }
-
-
-// package com.example.progress;
-
-// import java.sql.Connection;
-// import java.sql.SQLException;
-// import com.example.progress.connection.ConnectionManager;
-
-// public class App {
-// public static void main(String[] args) {
-
-

@@ -5,6 +5,7 @@ package com.example.progress.connection;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,7 +20,14 @@ public class ConnectionManager {
     public static void makeConnection()
             throws FileNotFoundException, IOException, ClassNotFoundException, SQLException {
         Properties props = new Properties();
-        props.load(new FileInputStream("resources/config.properties"));
+
+        InputStream fis =
+                ConnectionManager.class.getClassLoader().getResourceAsStream("config.properties");
+        if (fis == null) {
+            throw new FileNotFoundException("config.properties not found in classpath!");
+        }
+
+        props.load(fis);
 
         String url = props.getProperty("url");
         String username = props.getProperty("username");
