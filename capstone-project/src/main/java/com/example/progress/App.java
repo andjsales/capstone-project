@@ -5,11 +5,9 @@ package com.example.progress;
 import com.example.progress.dao.UserDao;
 import com.example.progress.dao.impl.UserDaoImpl;
 import com.example.progress.model.User;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import com.example.progress.connection.ConnectionManager;
@@ -21,9 +19,9 @@ public class App {
             throws FileNotFoundException, IOException, ClassNotFoundException {
         try {
             Connection conn = ConnectionManager.getConnection();
-            System.out.println("Connected to the database!");
+            System.out.println("\nConnected to the database!");
         } catch (SQLException e) {
-            System.out.println("Failed to connect to the database.");
+            System.out.println("\nFailed to connect to the database.");
             e.printStackTrace();
         } ;
 
@@ -37,10 +35,9 @@ public class App {
         while (true) {
             System.out.println("\n1. Login");
             System.out.println("2. Exit");
-            System.out.print("Choose an option: ");
+            System.out.print("\nChoose an option: \n");
 
             String choice = scanner.nextLine();
-
             if (choice.equals("1")) {
                 // === Ask for username and password ===
                 System.out.print("Username: ");
