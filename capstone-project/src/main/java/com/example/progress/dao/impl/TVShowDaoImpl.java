@@ -2,6 +2,16 @@
 
 package com.example.progress.dao.impl;
 
-public class TVShowDaoImpl {
+import com.example.progress.dao.TVShowDao;
+import com.example.progress.model.TVShow;
+// import java.sql.SQLException;
 
+
+public class TVShowDaoImpl implements TVShowDao {
+    // @SuppressWarnings("unused")
+    @Override
+    public TVShow findTvShow(int id, String title, int totalEpisodes) {
+        String sql = "SELECT * FROM TVShow WHERE id = ? AND title = ? AND totalEpisodes";
+        return null;
+    }
 }

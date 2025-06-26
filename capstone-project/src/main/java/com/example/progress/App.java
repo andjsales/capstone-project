@@ -30,7 +30,7 @@ public class App {
         UserDao userDao = new UserDaoImpl(); // use DAO to check login
         User loggedInUser = null; // store logged-in user info
 
-        System.out.println("\n\n===== Your Personal Watchlist =====");
+        System.out.println("\n===== Your Personal Watchlist =====");
 
         while (true) {
             System.out.println("\n1. Login");
@@ -40,7 +40,7 @@ public class App {
             String choice = scanner.nextLine();
             if (choice.equals("1")) {
                 // === Ask for username and password ===
-                System.out.print("Username: ");
+                System.out.print("\nUsername: ");
                 String username = scanner.nextLine();
 
                 System.out.print("Password: ");
@@ -50,21 +50,24 @@ public class App {
                 loggedInUser = userDao.findByUsernameAndPassword(username, password);
 
                 if (loggedInUser != null) {
-                    System.out.println("✅ Welcome, " + loggedInUser.getUsername() + "!");
+                    System.out.println("\n-----------------" + "\n\nWELCOME, "
+                            + loggedInUser.getUsername() + "!");
                     break; // exit login loop and continue
                 } else {
-                    System.out.println("❌ Invalid login. Please try again.");
+                    System.out.println("Invalid login. Please try again.");
                 }
 
             } else if (choice.equals("2")) {
-                System.out.println("👋 Exiting. Goodbye!");
+                System.out.println("Exiting program. Goodbye!");
                 System.exit(0);
             } else {
-                System.out.println("❌ Invalid input. Please choose 1 or 2.");
+                System.out.println("Invalid input. Please choose 1 or 2.");
             }
         }
 
         // You are now logged in!
         // Next step: show menu using loggedInUser.getId()
+        // loggedInUser.getId();
+        System.out.println("\nUser ID——" + loggedInUser.getId() + "\n");
     }
 }
