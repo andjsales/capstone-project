@@ -1,10 +1,8 @@
--- CREATE DATABASE
 -- if database 'progress_tracker' exists——select
 CREATE DATABASE IF NOT EXISTS progress_tracker;
 USE progress_tracker;
 
 
--- CREATE USER TABLE
 -- each user has a unique——ID + username + password
 CREATE TABLE User (
     id INT AUTO_INCREMENT PRIMARY KEY, -- AUTO_INCREMENT——ID increases automatically
@@ -13,7 +11,6 @@ CREATE TABLE User (
 );
 
 
--- CREATE 'TvShow' TABLE
 -- each show has——name + number of episodes
 -- auto-generate the ID
 CREATE TABLE TVShow (
@@ -23,7 +20,6 @@ CREATE TABLE TVShow (
 );
 
 
--- CREATE UserTVShowTracker TABLE
 -- junction table——link users + TV shows
 -- track——watching + how far along they are + their rating
 CREATE TABLE UserTVShowTracker (
