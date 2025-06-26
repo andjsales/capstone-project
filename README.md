@@ -67,7 +67,3 @@ Sample data is auto-loaded via the [`progress_tracker.sql`](./progress_tracker.s
 - Implement user registration
 - Create a GUI (JavaFX or Swing)
 - Secure passwords using hashing algorithms
-
-## License
-
-MIT License. Feel free to use and modify this project for learning purposes.
