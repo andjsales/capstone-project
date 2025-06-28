@@ -24,7 +24,7 @@ public class UserDaoImpl implements UserDao {
         try (Connection conn = ConnectionManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            // Bind values to the placeholders (?)
+            // Bind values to the placeholders
             stmt.setString(1, username);
             stmt.setString(2, password);
 
@@ -39,17 +39,7 @@ public class UserDaoImpl implements UserDao {
                 return new User(id, user, pass);
             }
 
-        } catch (SQLException e) {
-            System.out.println("Error finding user by credentials.");
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            System.out.println("Database configuration file not found.");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println("IO Exception occurred while getting connection.");
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            System.out.println("JDBC Driver class not found.");
+        } catch (ClassNotFoundException | IOException | SQLException e) {
             e.printStackTrace();
         }
 
