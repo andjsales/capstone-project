@@ -4,6 +4,7 @@ package com.example.progress;
 
 import com.example.progress.dao.UserDao;
 import com.example.progress.dao.impl.UserDaoImpl;
+import com.example.progress.model.TVShow;
 import com.example.progress.model.User;
 import com.example.progress.model.UserTVShowTracker;
 import java.io.FileNotFoundException;
@@ -14,7 +15,9 @@ import java.util.Scanner;
 import java.sql.Connection;
 import java.sql.SQLException;
 import com.example.progress.connection.ConnectionManager;
+import com.example.progress.dao.TVShowDao;
 import com.example.progress.dao.TrackerDao;
+import com.example.progress.dao.impl.TVShowDaoImpl;
 import com.example.progress.dao.impl.TrackerDaoImpl;
 
 
@@ -82,17 +85,31 @@ public class App {
         System.out.println("\nCurrently watching——");
 
 
-        TrackerDao trackerDao = new TrackerDaoImpl();
+        // TrackerDao trackerDao = new TrackerDaoImpl();
 
-        List<UserTVShowTracker> watchingList =
-                trackerDao.findAllWatchingAlphabetically(loggedInUser.getId());
+        // List<UserTVShowTracker> watchingList =
+        // trackerDao.findAllWatchingAlphabetically(loggedInUser.getId());
 
-        System.out.println("\n watchingList object\n" + watchingList + "\n\n");
+        // System.out.println("\n watchingList object\n" + watchingList + "\n\n");
 
-        for (UserTVShowTracker tracker : watchingList) {
-            System.out.println(tracker);
+        // for (UserTVShowTracker tracker : watchingList) {
+        // System.out.println(tracker);
+        // }
+
+        // TV SHOWS
+        // trying to output a list of currently watching titles
+        TVShowDao tvShowDao = new TVShowDaoImpl();
+
+        TVShow show = tvShowDao.findAllTVShows(1, "Love Island", 123);
+
+        if (show != null) {
+            System.out.println("Found TV Show:");
+            System.out.println("ID: " + show.getId());
+            System.out.println("Title: " + show.getTitle());
+            System.out.println("Total Episodes: " + show.getTotalEpisodes());
+        } else {
+            System.out.println("TV Show not found.");
         }
-
 
     }
 }
