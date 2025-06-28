@@ -12,45 +12,79 @@ import com.example.progress.connection.ConnectionManager;
 import com.example.progress.dao.TVShowDao;
 import com.example.progress.model.TVShow;
 // import java.sql.SQLException;
-import com.example.progress.model.User;
+// import com.example.progress.model.User;
 
 
 public class TVShowDaoImpl implements TVShowDao {
-    // @SuppressWarnings("unused")
+    // @Override
+    // public TVShow findTVShowByTitle(int id, String title, int totalEpisodes) {
+    // String sql = "SELECT * FROM TVShow WHERE id = ? AND title = ? AND totalEpisodes = ?";
+
+    // try (Connection conn = ConnectionManager.getConnection();
+    // PreparedStatement stmt = conn.prepareStatement(sql)) {
+    // stmt.setInt(1, id);
+    // stmt.setString(2, title);
+    // stmt.setInt(3, totalEpisodes);
+
+    // ResultSet rs = stmt.executeQuery();
+
+    // if (rs.next()) {
+    // int dbId = rs.getInt("id");
+    // String dbTitle = rs.getString("title");
+    // int dbTotalEpisodes = rs.getInt(totalEpisodes);
+
+    // System.out.println(new TVShow(dbId, dbTitle, dbTotalEpisodes));
+    // // return new TVShow(dbId, dbTitle, dbTotalEpisodes);
+    // }
+
+    // } catch (SQLException e) {
+    // System.out.println("Error finding user by credentials.");
+    // e.printStackTrace();
+    // } catch (FileNotFoundException e) {
+    // System.out.println("Database configuration file not found.");
+    // e.printStackTrace();
+    // } catch (IOException e) {
+    // System.out.println("IO Exception occurred while getting connection.");
+    // e.printStackTrace();
+    // } catch (ClassNotFoundException e) {
+    // System.out.println("JDBC Driver class not found.");
+    // e.printStackTrace();
+    // }
+    // return null;
+
+    // }
+
     @Override
-    public TVShow findTVShowByTitle(int id, String title, int totalEpisodes) {
+    public TVShow findAllTVShows(int id, String title, int totalEpisodes) {
         String sql = "SELECT * FROM TVShow WHERE id = ? AND title = ? AND totalEpisodes = ?";
 
         try (Connection conn = ConnectionManager.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            stmt.setString(2, title);
-            stmt.setInt(3, totalEpisodes);
+                PreparedStatement pstmt = conn.prepareStatement(
+                        "SELECT * FROM TVShow WHERE id = ? AND title = ? AND totalEpisodes = ?");) {
 
-            ResultSet rs = stmt.executeQuery();
+            pstmt.setInt(1, id);
+            pstmt.setString(2, title);
+            pstmt.setInt(3, totalEpisodes);
+
+            ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
                 int dbId = rs.getInt("id");
                 String dbTitle = rs.getString("title");
-                int dbTotalEpisodes = rs.getInt(totalEpisodes);
-
+                int dbTotalEpisodes = rs.getInt("totalEpisodes");
                 return new TVShow(dbId, dbTitle, dbTotalEpisodes);
             }
 
-        } catch (SQLException e) {
-            System.out.println("Error finding user by credentials.");
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            System.out.println("Database configuration file not found.");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println("IO Exception occurred while getting connection.");
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            System.out.println("JDBC Driver class not found.");
+        } catch (ClassNotFoundException | IOException | SQLException e) {
             e.printStackTrace();
         }
         return null;
+    }
 
+
+    @Override
+    public TVShow findTVShowByTitle(int id, String title, int totalEpisodes) {
+        return null;
+        // TODO
     }
 }
