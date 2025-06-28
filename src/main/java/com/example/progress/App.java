@@ -46,11 +46,10 @@ public class App {
             System.out.print("\nChoose an option: \n");
 
             String choice = scanner.nextLine();
+
             if (choice.equals("1")) {
-                // === Ask for username and password ===
                 System.out.print("\nUsername: ");
                 String username = scanner.nextLine();
-
                 System.out.print("Password: ");
                 String password = scanner.nextLine();
 
@@ -73,43 +72,81 @@ public class App {
             }
         }
 
-        // You are now logged in!
+        // ---------------------------------------------------
 
+        // You are now logged in!
         // Next step: show menu using loggedInUser.getId()
 
-        // loggedInUser.getId();
-        System.out.println("\nUser ID——" + loggedInUser.getId() + "\n -----------------");
+        loggedInUser.getId();
+        System.out.println("User ID—" + loggedInUser.getId() + "\n -----------------");
 
 
-        // display list of all currently watching upon logging in
-        System.out.println("\nCurrently watching——");
+        // ---------------------------------------------------
 
+        // display list of all currently watching shows alphabetically after logging in
 
-        // TrackerDao trackerDao = new TrackerDaoImpl();
-
-        // List<UserTVShowTracker> watchingList =
-        // trackerDao.findAllWatchingAlphabetically(loggedInUser.getId());
-
-        // System.out.println("\n watchingList object\n" + watchingList + "\n\n");
-
-        // for (UserTVShowTracker tracker : watchingList) {
-        // System.out.println(tracker);
-        // }
+        System.out.println("\nCurrently Watching Shows——");
 
         // TV SHOWS
         // trying to output a list of currently watching titles
+        // FIND ALL TV SHOWS
+
+
+
+        // attempt 1
+
+        // TVShowDao tvShowDao = new TVShowDaoImpl();
+
+        // if (show != null) {
+        // for (TVShow userShow : show)
+        // System.out.println("\nID: " + show.getId());
+        // System.out.println("Title: " + show.getTitle());
+        // System.out.println("Total Episodes: " + show.getTotalEpisodes() + "\n");
+        // } else {
+        // System.out.println("TV Show not found.");
+        // }
+
+        // ---------------------------------------------------
+        // attempt 2
+
+        // TrackerDao trackerDao = new TrackerDaoImpl();
+
+        // int userId = loggedInUser.getId();
+
+        // List<UserTVShowTracker> findAllWatching =
+        // trackerDao.findAllWatchingAlphabetically(userId);
+
+        // for (UserTVShowTracker tracker : findAllWatching) {
+        // if (findAllWatching != null) {
+        // System.out.println("Progress: " + tracker.getProgress());
+        // System.out.println("Status: " + tracker.getStatus());
+        // System.out.println("Rating: " + tracker.getRating());
+
+        // }
+        // }
+
+        // ---------------------------------------------------
+
+        TrackerDao trackerDao = new TrackerDaoImpl();
         TVShowDao tvShowDao = new TVShowDaoImpl();
 
-        TVShow show = tvShowDao.findAllTVShows(1, "Love Island", 123);
+        int userId = loggedInUser.getId();
+        List<UserTVShowTracker> findAllWatching = trackerDao.findAllWatchingAlphabetically(userId);
 
-        if (show != null) {
-            System.out.println("Found TV Show:");
-            System.out.println("ID: " + show.getId());
-            System.out.println("Title: " + show.getTitle());
-            System.out.println("Total Episodes: " + show.getTotalEpisodes());
+
+        if (findAllWatching.isEmpty()) {
+            System.out.println("You are not currently watching any shows.");
         } else {
-            System.out.println("TV Show not found.");
-        }
+            for (UserTVShowTracker tracker : findAllWatching) {
 
+                TVShow show = tvShowDao.findAllTVShows(tracker.getTvShowId());
+
+                System.out.println("Title: " + show.getTitle());
+                System.out.println("Progress: " + tracker.getProgress());
+                System.out.println("Status: " + tracker.getStatus());
+                System.out.println("Rating: " + tracker.getRating());
+                System.out.println();
+            }
+        }
     }
 }

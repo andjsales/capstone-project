@@ -55,16 +55,13 @@ public class TVShowDaoImpl implements TVShowDao {
     // }
 
     @Override
-    public TVShow findAllTVShows(int id, String title, int total_episodes) {
-        String sql = "SELECT * FROM TVShow WHERE id = ? AND title = ? AND total_episodes = ?";
+    public TVShow findAllTVShows(int id) {
+        String sql = "SELECT * FROM TVShow WHERE id = ?";
 
         try (Connection conn = ConnectionManager.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(
-                        "SELECT * FROM TVShow WHERE id = ? AND title = ? AND total_episodes = ?");) {
+                PreparedStatement pstmt = conn.prepareStatement(sql);) {
 
             pstmt.setInt(1, id);
-            pstmt.setString(2, title);
-            pstmt.setInt(3, total_episodes);
 
             ResultSet rs = pstmt.executeQuery();
 
