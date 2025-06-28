@@ -75,3 +75,4 @@ Sample data is auto-loaded via the [`progress_tracker.sql`](./progress_tracker.s
 - changeTVShowWatchStatus()
 - changeTVShowRating()
 - updateTVShowProgress()
+- fix findAllShows() method
