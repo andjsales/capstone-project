@@ -6,4 +6,6 @@ import com.example.progress.model.TVShow;
 
 public interface TVShowDao {
     TVShow findTVShowByTitle(int id, String title, int totalEpisodes);
+
+    TVShow findAllTVShows(int id, String title, int totalEpisodes);
 }
