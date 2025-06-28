@@ -5,12 +5,17 @@ package com.example.progress;
 import com.example.progress.dao.UserDao;
 import com.example.progress.dao.impl.UserDaoImpl;
 import com.example.progress.model.User;
+import com.example.progress.model.UserTVShowTracker;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.sql.Connection;
 import java.sql.SQLException;
 import com.example.progress.connection.ConnectionManager;
+import com.example.progress.dao.TrackerDao;
+import com.example.progress.dao.impl.TrackerDaoImpl;
 
 
 public class App {
@@ -66,8 +71,28 @@ public class App {
         }
 
         // You are now logged in!
+
         // Next step: show menu using loggedInUser.getId()
+
         // loggedInUser.getId();
-        System.out.println("\nUser ID——" + loggedInUser.getId() + "\n");
+        System.out.println("\nUser ID——" + loggedInUser.getId() + "\n -----------------");
+
+
+        // display list of all currently watching upon logging in
+        System.out.println("\nCurrently watching——");
+
+
+        TrackerDao trackerDao = new TrackerDaoImpl();
+
+        List<UserTVShowTracker> watchingList =
+                trackerDao.findAllWatchingAlphabetically(loggedInUser.getId());
+
+        System.out.println("\n watchingList object\n" + watchingList + "\n\n");
+
+        for (UserTVShowTracker tracker : watchingList) {
+            System.out.println(tracker);
+        }
+
+
     }
 }

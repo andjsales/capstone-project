@@ -2,14 +2,14 @@ package com.example.progress.model;
 
 public class User {
 
-    private int id; // maps to SQL column `id`
-    private String username; // maps to SQL column `username`
-    private String password; // maps to SQL column `password`
+    private int id; // map to SQL column `id`
+    private String username; // map to SQL column `username`
+    private String password; // map to SQL column `password`
 
-    // Empty CONSTRUCTOR for JDBC or frameworks
+    // Empty CONSTRUCTOR——for JDBC/frameworks
     public User() {}
 
-    // CONSTRUCTOR for creating new User objects quickly
+    // CONSTRUCTOR——creating new User objects quickly
     public User(int id, String username, String password) {
         this.id = id;
         this.username = username;

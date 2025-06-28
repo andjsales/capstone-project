@@ -9,8 +9,8 @@ public class UserTVShowTracker {
     private String status; // "Plan to Watch", "Watching", "Completed"
     private Integer rating; // can be null (Integer wrapper allows that)
 
-    // CONSTRUCTORS
 
+    // CONSTRUCTORS
     public UserTVShowTracker() {}
 
     public UserTVShowTracker(int id, int userId, int tvShowId, int progress, String status,
@@ -24,7 +24,6 @@ public class UserTVShowTracker {
     }
 
     // GETTERS & SETTERS
-
     public int getId() {
         return id;
     }
@@ -72,6 +71,10 @@ public class UserTVShowTracker {
     public void setRating(Integer rating) {
         this.rating = rating;
     }
+
+    // public enum Status {
+    // PLAN_TO_WATCH, WATCHING, COMPLETED
+    // }
 
     // toString()——for console/debugging
     @Override

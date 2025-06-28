@@ -67,3 +67,11 @@ Sample data is auto-loaded via the [`progress_tracker.sql`](./progress_tracker.s
 - Implement user registration
 - Create a GUI (JavaFX or Swing)
 - Secure passwords using hashing algorithms
+- add a Movies entity
+
+## Methods to add
+
+- addTVShowToList()
+- changeTVShowWatchStatus()
+- changeTVShowRating()
+- updateTVShowProgress()

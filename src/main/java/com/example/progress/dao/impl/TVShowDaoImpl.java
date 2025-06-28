@@ -10,7 +10,7 @@ import com.example.progress.model.TVShow;
 public class TVShowDaoImpl implements TVShowDao {
     // @SuppressWarnings("unused")
     @Override
-    public TVShow findTvShow(int id, String title, int totalEpisodes) {
+    public TVShow findTVShowByTitle(int id, String title, int totalEpisodes) {
         String sql = "SELECT * FROM TVShow WHERE id = ? AND title = ? AND totalEpisodes";
         return null;
     }

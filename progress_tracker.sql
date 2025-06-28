@@ -28,13 +28,11 @@ CREATE TABLE UserTVShowTracker (
     tv_show_id INT,
     progress INT DEFAULT 0,
     status ENUM('Plan to Watch', 'Watching', 'Completed') NOT NULL, --ENUM——restricts status values
-    rating INT CHECK (rating BETWEEN 1 AND 10), -- CHECK——ensures ratings are between 1-5
+    rating INT CHECK (rating BETWEEN 1 AND 10), -- CHECK——ensures ratings are between 1-10
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE, -- ON DELETE CASCADE——deleting a user or show removes related tracker rows
     FOREIGN KEY (tv_show_id) REFERENCES TVShow(id) ON DELETE CASCADE
 );
 
-
--- ADD SAMPLE DATA
 INSERT INTO User (username, password) VALUES -- sample user data
 ('amberglory', 'rootroot123'),
 ('andrewsales', 'password123');

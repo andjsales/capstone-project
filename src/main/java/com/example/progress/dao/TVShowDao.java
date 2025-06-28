@@ -5,5 +5,5 @@ package com.example.progress.dao;
 import com.example.progress.model.TVShow;
 
 public interface TVShowDao {
-    TVShow findTvShow(int id, String title, int totalEpisodes);
+    TVShow findTVShowByTitle(int id, String title, int totalEpisodes);
 }
