@@ -55,23 +55,23 @@ public class TVShowDaoImpl implements TVShowDao {
     // }
 
     @Override
-    public TVShow findAllTVShows(int id, String title, int totalEpisodes) {
-        String sql = "SELECT * FROM TVShow WHERE id = ? AND title = ? AND totalEpisodes = ?";
+    public TVShow findAllTVShows(int id, String title, int total_episodes) {
+        String sql = "SELECT * FROM TVShow WHERE id = ? AND title = ? AND total_episodes = ?";
 
         try (Connection conn = ConnectionManager.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(
-                        "SELECT * FROM TVShow WHERE id = ? AND title = ? AND totalEpisodes = ?");) {
+                        "SELECT * FROM TVShow WHERE id = ? AND title = ? AND total_episodes = ?");) {
 
             pstmt.setInt(1, id);
             pstmt.setString(2, title);
-            pstmt.setInt(3, totalEpisodes);
+            pstmt.setInt(3, total_episodes);
 
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
                 int dbId = rs.getInt("id");
                 String dbTitle = rs.getString("title");
-                int dbTotalEpisodes = rs.getInt("totalEpisodes");
+                int dbTotalEpisodes = rs.getInt("total_episodes");
                 return new TVShow(dbId, dbTitle, dbTotalEpisodes);
             }
 
@@ -83,7 +83,7 @@ public class TVShowDaoImpl implements TVShowDao {
 
 
     @Override
-    public TVShow findTVShowByTitle(int id, String title, int totalEpisodes) {
+    public TVShow findTVShowByTitle(int id, String title, int total_episodes) {
         return null;
         // TODO
     }

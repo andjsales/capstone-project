@@ -4,17 +4,17 @@ public class TVShow {
 
     private int id; // maps to TVShow table's `id` column
     private String title; // maps to `title` column
-    private int totalEpisodes; // maps to `total_episodes` column
+    private int total_episodes; // maps to `total_episodes` column
 
 
     // defining an empty CONSTRUCTOR——required by frameworks/JDBC
     public TVShow() {}
 
     // defining a full CONSTRUCTOR to quickly create TVShow objects
-    public TVShow(int id, String title, int totalEpisodes) {
+    public TVShow(int id, String title, int total_episodes) {
         this.id = id;
         this.title = title;
-        this.totalEpisodes = totalEpisodes;
+        this.total_episodes = total_episodes;
     }
 
     // GETTERS & SETTERS
@@ -36,17 +36,17 @@ public class TVShow {
     }
 
     public int getTotalEpisodes() {
-        return totalEpisodes;
+        return total_episodes;
     }
 
-    public void setTotalEpisodes(int totalEpisodes) {
-        this.totalEpisodes = totalEpisodes;
+    public void setTotalEpisodes(int total_episodes) {
+        this.total_episodes = total_episodes;
     }
 
     // toString()——for debugging/logging
     @Override
     public String toString() {
-        return "TVShow [id=" + id + ", title=" + title + ", totalEpisodes=" + totalEpisodes + "]";
+        return "TVShow [id=" + id + ", title=" + title + ", total_episodes=" + total_episodes + "]";
     }
 }
 
