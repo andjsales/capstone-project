@@ -10,7 +10,6 @@ import com.example.progress.model.UserTVShowTracker;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -25,6 +24,8 @@ public class App {
 
     public static void main(String[] args)
             throws FileNotFoundException, IOException, ClassNotFoundException {
+
+        // LOGIC TO CONNECT TO DATABASE
         try {
             Connection conn = ConnectionManager.getConnection();
             System.out.println("\nConnected to the database!");
@@ -33,10 +34,12 @@ public class App {
             e.printStackTrace();
         } ;
 
-
         Scanner scanner = new Scanner(System.in);
-        UserDao userDao = new UserDaoImpl(); // use DAO to check login
-        User loggedInUser = null; // store logged-in user info
+        UserDao userDao = new UserDaoImpl(); // USE DAO TO CHECK LOGIN
+        User loggedInUser = null; // STORING USER INFO
+
+        // ———————————————————————————————————————————————————————————————————————
+        // Login and Exit options
 
         System.out.println("\n===== Your Personal Watchlist =====");
 
@@ -53,13 +56,16 @@ public class App {
                 System.out.print("Password: ");
                 String password = scanner.nextLine();
 
-                // === Check credentials via DAO ===
+                // Check credentials via DAO
                 loggedInUser = userDao.findByUsernameAndPassword(username, password);
 
                 if (loggedInUser != null) {
                     System.out.println("\n-----------------" + "\n\nWELCOME, "
                             + loggedInUser.getUsername() + "!");
-                    break; // exit login loop and continue
+                    break; // exit login loop ——> continue
+
+                    // You are now logged in!
+
                 } else {
                     System.out.println("Invalid login. Please try again.");
                 }
@@ -72,67 +78,24 @@ public class App {
             }
         }
 
-        // ---------------------------------------------------
-
-        // You are now logged in!
-        // Next step: show menu using loggedInUser.getId()
+        // ———————————————————————————————————————————————————————————————————————
+        // ——show menu using loggedInUser.getId()
 
         loggedInUser.getId();
-        System.out.println("User ID—" + loggedInUser.getId() + "\n -----------------");
+        System.out.println("(User ID: " + loggedInUser.getId() + ")");
+        System.out.println("\n-----------------");
 
-
-        // ---------------------------------------------------
-
-        // display list of all currently watching shows alphabetically after logging in
+        // ———————————————————————————————————————————————————————————————————————
+        // output a list of currently all watching tv shows in alphabetical order of their titles
+        // prints——title, status, progress, rating
 
         System.out.println("\nCurrently Watching Shows——");
-
-        // TV SHOWS
-        // trying to output a list of currently watching titles
-        // FIND ALL TV SHOWS
-
-
-
-        // attempt 1
-
-        // TVShowDao tvShowDao = new TVShowDaoImpl();
-
-        // if (show != null) {
-        // for (TVShow userShow : show)
-        // System.out.println("\nID: " + show.getId());
-        // System.out.println("Title: " + show.getTitle());
-        // System.out.println("Total Episodes: " + show.getTotalEpisodes() + "\n");
-        // } else {
-        // System.out.println("TV Show not found.");
-        // }
-
-        // ---------------------------------------------------
-        // attempt 2
-
-        // TrackerDao trackerDao = new TrackerDaoImpl();
-
-        // int userId = loggedInUser.getId();
-
-        // List<UserTVShowTracker> findAllWatching =
-        // trackerDao.findAllWatchingAlphabetically(userId);
-
-        // for (UserTVShowTracker tracker : findAllWatching) {
-        // if (findAllWatching != null) {
-        // System.out.println("Progress: " + tracker.getProgress());
-        // System.out.println("Status: " + tracker.getStatus());
-        // System.out.println("Rating: " + tracker.getRating());
-
-        // }
-        // }
-
-        // ---------------------------------------------------
 
         TrackerDao trackerDao = new TrackerDaoImpl();
         TVShowDao tvShowDao = new TVShowDaoImpl();
 
         int userId = loggedInUser.getId();
         List<UserTVShowTracker> findAllWatching = trackerDao.findAllWatchingAlphabetically(userId);
-
 
         if (findAllWatching.isEmpty()) {
             System.out.println("You are not currently watching any shows.");
