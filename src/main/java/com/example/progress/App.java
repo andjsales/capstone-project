@@ -87,7 +87,7 @@ public class App {
         // output a list of currently all watching tv shows in alphabetical order of their titles
         // prints——title, status, progress, rating
 
-        System.out.println("\nCurrently Watching Shows——");
+        System.out.println("\nCurrently Watching Shows——\n");
 
         TrackerDao trackerDao = new TrackerDaoImpl();
         TVShowDao tvShowDao = new TVShowDaoImpl();
@@ -95,23 +95,37 @@ public class App {
         int userId = loggedInUser.getId();
         List<UserTVShowTracker> findAllWatching = trackerDao.findAllWatchingAlphabetically(userId);
 
-        if (findAllWatching.isEmpty()) {
-            System.out.println("You are not currently watching any shows.");
-        } else {
-            for (UserTVShowTracker tracker : findAllWatching) {
+        System.out.println("\n1. View all shows");
+        System.out.println("2. View all currently watching shows");
+        System.out.print("\nChoose an option: \n");
 
-                TVShow show = tvShowDao.findAllTVShows(tracker.getTvShowId());
+        String choice = scanner.nextLine();
 
+        if (choice.equals("1")) {
+            System.out.println("\nAll Shows:");
+            List<TVShow> allShows = tvShowDao.findAllTVShows();
+            for (TVShow show : allShows) {
                 System.out.println("Title: " + show.getTitle());
-                System.out.println("Progress: " + tracker.getProgress());
-                System.out.println("Status: " + tracker.getStatus());
-                System.out.println("Rating: " + tracker.getRating());
+                System.out.println("Total Episodes: " + show.getTotalEpisodes());
                 System.out.println();
-
             }
+        } else if (choice.equals("2")) {
+            if (findAllWatching.isEmpty()) {
+                System.out.println("You are not currently watching any shows.");
+            } else {
+                for (UserTVShowTracker tracker : findAllWatching) {
+                    TVShow show = tvShowDao.findAllTVShows(tracker.getTvShowId());
+                    System.out.println("Title: " + show.getTitle());
+                    System.out.println("Progress: " + tracker.getProgress());
+                    System.out.println("Status: " + tracker.getStatus());
+                    System.out.println("Rating: " + tracker.getRating());
+                    System.out.println();
+                }
+            }
+        } else {
+            System.out.println("Invalid input. Please choose 1 or 2.");
         }
-
         // list ALL tv shows
-
     }
+
 }
