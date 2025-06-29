@@ -81,13 +81,10 @@ public class App {
 
         loggedInUser.getId();
         System.out.println("(User ID: " + loggedInUser.getId() + ")");
-        System.out.println("\n-----------------");
 
         // ———————————————————————————————————————————————————————————————————————
         // output a list of currently all watching tv shows in alphabetical order of their titles
         // prints——title, status, progress, rating
-
-        System.out.println("\nCurrently Watching Shows——\n");
 
         TrackerDao trackerDao = new TrackerDaoImpl();
         TVShowDao tvShowDao = new TVShowDaoImpl();
@@ -102,7 +99,8 @@ public class App {
         String choice = scanner.nextLine();
 
         if (choice.equals("1")) {
-            System.out.println("\nAll Shows:");
+            System.out.println("\n-----------------");
+            System.out.println("\nAll Shows——\n");
             List<TVShow> allShows = tvShowDao.findAllTVShows();
             for (TVShow show : allShows) {
                 System.out.println("Title: " + show.getTitle());
@@ -111,8 +109,11 @@ public class App {
             }
         } else if (choice.equals("2")) {
             if (findAllWatching.isEmpty()) {
-                System.out.println("You are not currently watching any shows.");
+                System.out.println("\n-----------------");
+                System.out.println("\nYou are not currently watching any shows.");
             } else {
+                System.out.println("\n-----------------");
+                System.out.println("\nCurrently Watching Shows——\n");
                 for (UserTVShowTracker tracker : findAllWatching) {
                     TVShow show = tvShowDao.findAllTVShows(tracker.getTvShowId());
                     System.out.println("Title: " + show.getTitle());
@@ -123,7 +124,7 @@ public class App {
                 }
             }
         } else {
-            System.out.println("Invalid input. Please choose 1 or 2.");
+            System.out.println("Invalid entry. Please choose 1 or 2.");
         }
         // list ALL tv shows
     }
