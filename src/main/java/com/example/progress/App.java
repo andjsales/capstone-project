@@ -1,5 +1,3 @@
-// This will hold your main() method and your console menu logic
-
 package com.example.progress;
 
 import com.example.progress.dao.UserDao;
@@ -56,7 +54,7 @@ public class App {
                 System.out.print("Password: ");
                 String password = scanner.nextLine();
 
-                // Check credentials via DAO
+                // check credentials using the DAO
                 loggedInUser = userDao.findByUsernameAndPassword(username, password);
 
                 if (loggedInUser != null) {
@@ -109,7 +107,11 @@ public class App {
                 System.out.println("Status: " + tracker.getStatus());
                 System.out.println("Rating: " + tracker.getRating());
                 System.out.println();
+
             }
         }
+
+        // list ALL tv shows
+
     }
 }

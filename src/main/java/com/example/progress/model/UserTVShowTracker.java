@@ -72,10 +72,6 @@ public class UserTVShowTracker {
         this.rating = rating;
     }
 
-    // public enum Status {
-    // PLAN_TO_WATCH, WATCHING, COMPLETED
-    // }
-
     // toString()——for console/debugging
     @Override
     public String toString() {
