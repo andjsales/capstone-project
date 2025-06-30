@@ -48,6 +48,14 @@ INSERT INTO TVShow (title, total_episodes) VALUES -- sample TV shows data
 ('Love Island', 123),
 ('Regular Show', 244),
 ('Real Houswives of Salt Lake City', 51);
+('Breaking Bad', 62),
+('Stranger Things', 34),
+('The Office', 201),
+('Game of Thrones', 73),
+('Friends', 236),
+('The Bear', 18),
+('Euphoria', 18);
+
 
 INSERT INTO UserTVShowTracker (user_id, tv_show_id, progress, status, rating) VALUES -- sample tracking info data
 (1, 1, 123, 'Completed', 5),
@@ -56,3 +64,7 @@ INSERT INTO UserTVShowTracker (user_id, tv_show_id, progress, status, rating) VA
 (2, 1, 51, 'Watching', NULL),
 (2, 2, 2, 'Watching', 10),
 (2, 3, 0, 'Plan to Watch', NULL);
+(2, 7, 73, 'Completed', 6),
+(2, 8, 236, 'Completed', 9),
+(2, 9, 5, 'Watching', 7),
+(2, 10, 0, 'Plan to Watch', NULL);
