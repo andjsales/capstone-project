@@ -47,7 +47,7 @@ INSERT INTO User (username, password) VALUES -- sample user data
 INSERT INTO TVShow (title, total_episodes) VALUES -- sample TV shows data
 ('Love Island', 123),
 ('Regular Show', 244),
-('Real Houswives of Salt Lake City', 51);
+('Real Houswives of Salt Lake City', 51),
 ('Breaking Bad', 62),
 ('Stranger Things', 34),
 ('The Office', 201),
