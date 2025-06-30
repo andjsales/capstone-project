@@ -63,7 +63,7 @@ INSERT INTO UserTVShowTracker (user_id, tv_show_id, progress, status, rating) VA
 (1, 3, 51, 'Completed', 7),
 (2, 1, 51, 'Watching', NULL),
 (2, 2, 2, 'Watching', 10),
-(2, 3, 0, 'Plan to Watch', NULL);
+(2, 3, 0, 'Plan to Watch', NULL),
 (2, 7, 73, 'Completed', 6),
 (2, 8, 236, 'Completed', 9),
 (2, 9, 5, 'Watching', 7),
