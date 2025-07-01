@@ -76,3 +76,18 @@ Sample data is auto-loaded via the [`progress_tracker.sql`](./progress_tracker.s
 - changeTVShowRating()
 - updateTVShowProgress()
 - fix findAllShows() method
+
+## order of operations
+
+1. login/exit——choose an option (1 or 2)
+2. type in username——enter
+3. type in password——enter
+4. WELCOME
+5. 1•view all shows——2•view all currently watching——choose an option
+6. if 1——return all show titles——progress——total eps
+7. if 2——return all currently watching——title——progress——status——rating
+
+## next steps
+
+8. method to add shows——ask for title——progress——status——rating
+9.
