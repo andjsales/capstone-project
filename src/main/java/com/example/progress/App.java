@@ -19,6 +19,15 @@ import com.example.progress.dao.impl.TrackerDaoImpl;
 
 
 public class App {
+    // helper method to get user's progress for a show
+    private static int getUserProgressForShow(List<UserTVShowTracker> trackers, int tvShowId) {
+        for (UserTVShowTracker tracker : trackers) {
+            if (tracker.getTvShowId() == tvShowId) {
+                return tracker.getProgress();
+            }
+        }
+        return 0;
+    }
 
     public static void main(String[] args)
             throws FileNotFoundException, IOException, ClassNotFoundException {
@@ -100,12 +109,13 @@ public class App {
 
         if (choice.equals("1")) {
             System.out.println("\n-----------------");
-            System.out.println("\nAll Shows——\n");
+            System.out.println("\nALL SHOWS——\n");
             List<TVShow> allShows = tvShowDao.findAllTVShows();
             for (TVShow show : allShows) {
-                System.out.println("Title: " + show.getTitle());
-                System.out.println("Total Episodes: " + show.getTotalEpisodes());
-                System.out.println();
+
+                int progress = getUserProgressForShow(findAllWatching, show.getId());
+                System.out.println('"' + show.getTitle() + '"' + " — " + progress + "/"
+                        + show.getTotalEpisodes());
             }
         } else if (choice.equals("2")) {
             if (findAllWatching.isEmpty()) {
@@ -126,7 +136,6 @@ public class App {
         } else {
             System.out.println("Invalid entry. Please choose 1 or 2.");
         }
-        // list ALL tv shows
     }
 
 }
