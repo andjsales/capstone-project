@@ -27,4 +27,7 @@ public interface TrackerDao {
 
     List<UserTVShowTracker> findAllWatchingAlphabetically(int userId);
 
+    void addUserTVShowTracker(int userId, int tvShowId, int progress, String status,
+            Integer rating);
+
 }

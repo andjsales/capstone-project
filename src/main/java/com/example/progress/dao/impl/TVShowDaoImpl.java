@@ -19,13 +19,12 @@ public class TVShowDaoImpl implements TVShowDao {
 
     @Override
     public TVShow findAllTVShows(int id) {
-        String sql = "SELECT * FROM TVShow WHERE id = ?";
 
+        String sql = "SELECT * FROM TVShow WHERE id = ?";
         try (Connection conn = ConnectionManager.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql);) {
 
             pstmt.setInt(1, id);
-
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
@@ -60,10 +59,52 @@ public class TVShowDaoImpl implements TVShowDao {
         return shows;
     }
 
-
     @Override
     public TVShow findTVShowByTitle(int id, String title, int total_episodes) {
         return null;
-        // TODO
     }
+
+    @Override
+    public TVShow findTVShowByTitle(String title) {
+        String sql = "SELECT * FROM TVShow WHERE title = ?";
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, title);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                String dbTitle = rs.getString("title");
+                int totalEpisodes = rs.getInt("total_episodes");
+                return new TVShow(id, dbTitle, totalEpisodes);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public TVShow addTVShow(String title, int total_episodes) {
+        String sql = "INSERT INTO TVShow (title, total_episodes) VALUES (?, ?)";
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, title);
+            pstmt.setInt(2, total_episodes);
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                System.out.println("Adding TV Show failed");
+                return null;
+            }
+            return new TVShow(-1, title, total_episodes);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 }
+

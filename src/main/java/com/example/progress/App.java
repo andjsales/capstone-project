@@ -17,7 +17,6 @@ import com.example.progress.dao.TrackerDao;
 import com.example.progress.dao.impl.TVShowDaoImpl;
 import com.example.progress.dao.impl.TrackerDaoImpl;
 
-
 public class App {
     // helper method to get user's progress for a show
     private static int getUserProgressForShow(List<UserTVShowTracker> trackers, int tvShowId) {
@@ -85,14 +84,13 @@ public class App {
             }
         }
 
-        // ———————————————————————————————————————————————————————————————————————
         // ——show menu using loggedInUser.getId()
 
         loggedInUser.getId();
         System.out.println("(User ID: " + loggedInUser.getId() + ")");
 
-        // ———————————————————————————————————————————————————————————————————————
-        // output a list of currently all watching tv shows in alphabetical order of their titles
+        // output all currently watching tv shows——alphabetical
+
         // prints——title, status, progress, rating
 
         TrackerDao trackerDao = new TrackerDaoImpl();
@@ -102,7 +100,7 @@ public class App {
         List<UserTVShowTracker> findAllWatching = trackerDao.findAllWatchingAlphabetically(userId);
 
         System.out.println("\n1. View all shows");
-        System.out.println("2. View all currently watching shows");
+        System.out.println("2. View all currently watching");
         System.out.print("\nChoose an option: \n");
 
         String choice = scanner.nextLine();
@@ -136,6 +134,40 @@ public class App {
         } else {
             System.out.println("Invalid entry. Please choose 1 or 2.");
         }
+
+        // ADDING A NEW TV SHOW INTO THE DATABASE
+        // prompt user for——title——progress——status——rating
+        System.out.println("\nAdd a new TV Show to your watchlist——\n");
+        System.out.println("Enter title: ");
+        String addTitle = scanner.nextLine();
+        System.out.print("Enter total number of episodes: ");
+        int addTotalEpisodes = Integer.parseInt(scanner.nextLine());
+        System.out.println("Enter episodes watched: ");
+        int addProgress = Integer.parseInt(scanner.nextLine());
+        System.out.println("Enter watching status (Plan to Watch, Watching, Completed): ");
+        String addStatus = scanner.nextLine();
+        System.out.println("Enter rating (optional): ");
+        String ratingInput = scanner.nextLine();
+        Integer addRating = ratingInput.isEmpty() ? null : Integer.parseInt(ratingInput);
+
+        TVShow newShow = tvShowDao.addTVShow(addTitle, addTotalEpisodes);
+        if (newShow == null) {
+            System.out.println("Failed to add.");
+            return;
+        }
+
+        TVShow showFromDb = tvShowDao.findTVShowByTitle(addTitle);
+        if (showFromDb == null) {
+            System.out.println("Could not find the new show in the database.");
+            return;
+        }
+
+        trackerDao.addUserTVShowTracker(loggedInUser.getId(), showFromDb.getId(), addProgress,
+                addStatus, addRating);
+        System.out.println("Show and tracker entry added successfully!");
+        // look up show in TVShow table——use tltle user provided
+
+        // create/update UserTVShowTracker entry for this user and show
     }
 
 }

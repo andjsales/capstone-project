@@ -67,4 +67,27 @@ public class TrackerDaoImpl implements TrackerDao {
         }
         return trackers;
     }
+
+    @Override
+    public void addUserTVShowTracker(int userId, int tvShowId, int progress, String status,
+            Integer rating) {
+        String sql =
+                "INSERT INTO UserTVShowTracker (user_id, tv_show_id, progress, status, rating) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            pstmt.setInt(2, tvShowId);
+            pstmt.setInt(3, progress);
+            pstmt.setString(4, status);
+            if (rating != null) {
+                pstmt.setInt(5, rating);
+            } else {
+                pstmt.setNull(5, java.sql.Types.INTEGER);
+            }
+            pstmt.executeUpdate();
+            System.out.println("Tracker entry added!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

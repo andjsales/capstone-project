@@ -6,9 +6,15 @@ import java.util.List;
 import com.example.progress.model.TVShow;
 
 public interface TVShowDao {
+
     TVShow findTVShowByTitle(int id, String title, int total_episodes);
+
+    TVShow findTVShowByTitle(String title);
 
     TVShow findAllTVShows(int id);
 
     List<TVShow> findAllTVShows();
+
+    TVShow addTVShow(String title, int total_episodes);
+
 }
