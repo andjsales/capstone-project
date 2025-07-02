@@ -66,21 +66,21 @@ public class App {
                 loggedInUser = userDao.findByUsernameAndPassword(username, password);
 
                 if (loggedInUser != null) {
-                    System.out.println("\n-----------------" + "\n\nWELCOME, "
+                    System.out.println("\n—————————————————————————————————" + "\n\nWELCOME, "
                             + loggedInUser.getUsername() + "!");
                     break; // exit login loop ——> continue
 
                     // You are now logged in!
 
                 } else {
-                    System.out.println("Invalid login. Please try again.");
+                    System.out.println("\nIncorrect login——please try again.");
                 }
 
             } else if (choice.equals("2")) {
                 System.out.println("Exiting program. Goodbye!");
                 System.exit(0);
             } else {
-                System.out.println("Invalid input. Please choose 1 or 2.");
+                System.out.println("\nWrong entry. Please choose 1 or 2.");
             }
         }
 
@@ -158,7 +158,7 @@ public class App {
 
         TVShow showFromDb = tvShowDao.findTVShowByTitle(addTitle);
         if (showFromDb == null) {
-            System.out.println("Could not find the new show in the database.");
+                    System.out.println("Could not find new show in the database.");
             return;
         }
 
