@@ -31,7 +31,7 @@ public class App {
     public static void main(String[] args)
             throws FileNotFoundException, IOException, ClassNotFoundException {
 
-        // LOGIC TO CONNECT TO DATABASE
+        // MARK: LOGIC TO CONNECT TO DATABASE
         try {
             Connection conn = ConnectionManager.getConnection();
             System.out.println("\nConnected to the database!");
@@ -45,7 +45,7 @@ public class App {
         User loggedInUser = null; // STORING USER INFO
 
         // ———————————————————————————————————————————————————————————————————————
-        // Login and Exit options
+        // MARK: Login + Exit options
 
         System.out.println("\n===== Your Personal Watchlist =====");
 
@@ -62,15 +62,17 @@ public class App {
                 System.out.print("Password: ");
                 String password = scanner.nextLine();
 
-                // check credentials using the DAO
+                // MARK: check credentials using DAO
                 loggedInUser = userDao.findByUsernameAndPassword(username, password);
 
                 if (loggedInUser != null) {
                     System.out.println("\n—————————————————————————————————" + "\n\nWELCOME, "
                             + loggedInUser.getUsername() + "!");
+                    System.out.println("(User ID: " + loggedInUser.getId() + ")");
+
                     break; // exit login loop ——> continue
 
-                    // You are now logged in!
+                    // MARK: You are now logged in!
 
                 } else {
                     System.out.println("\nIncorrect login——please try again.");
@@ -87,7 +89,6 @@ public class App {
             // ——show menu using loggedInUser.getId()
 
             loggedInUser.getId();
-            System.out.println("(User ID: " + loggedInUser.getId() + ")");
 
             // output all currently watching tv shows——alphabetical
 
@@ -95,36 +96,36 @@ public class App {
 
             TrackerDao trackerDao = new TrackerDaoImpl();
             TVShowDao tvShowDao = new TVShowDaoImpl();
-
             int userId = loggedInUser.getId();
-
             List<UserTVShowTracker> sortByTitle = trackerDao.findAllWatchingAlphabetically(userId);
             List<UserTVShowTracker> sortByRating = trackerDao.findAllOrderByRating(userId);
             List<TVShow> allShows = tvShowDao.findTVShowById();
 
-            System.out.println("\n—————————————————————————————————");
+
+            // MARK: —MENU OPTIONS
             System.out.println("\n1. Add to watchlist");
-            System.out.println("2. View All Shows");
-            System.out.println("3. Sort Currently Watching Alphabetically");
-            System.out.println("4. Sort Currently Watching by Rating");
-            System.out.println("5. Exit");
+            System.out.println("2. View all saved shows");
+            System.out.println("3. Sort currently watching alphabetically");
+            System.out.println("4. Sort currently watching by rating");
+            System.out.println("5. Filter by watch status");
+            System.out.println("6. Exit");
+            System.out.println("\n—————————————————————————————————");
             System.out.print("\nChoose an option: ");
 
             String choice = scanner.nextLine();
 
-            // ADDING A NEW TV SHOW INTO THE DATABASE
-            // prompt user for——title——progress——status——rating
 
-            // 1
+            // MARK: 1—ADD TO WATCHLIST
+            // prompt user for——title——progress——status——rating
             if (choice.equals("1")) {
-                System.out.println("\nAdd a new TV Show to your watchlist——\n");
+                System.out.println("\n1——ADD TO WATCHLIST\n");
                 System.out.println("Enter title: ");
                 String addTitle = scanner.nextLine();
-                System.out.print("Enter total number of episodes: ");
+                System.out.print("Enter total # of episodes: ");
                 int addTotalEpisodes = Integer.parseInt(scanner.nextLine());
-                System.out.println("Enter episodes watched: ");
+                System.out.println("Enter # of episodes watched: ");
                 int addProgress = Integer.parseInt(scanner.nextLine());
-                System.out.println("Enter watching status (Plan to Watch, Watching, Completed): ");
+                System.out.println("Enter watching status (planning, watching, completed): ");
                 String addStatus = scanner.nextLine();
                 System.out.println("Enter rating (optional): ");
                 String ratingInput = scanner.nextLine();
@@ -146,11 +147,10 @@ public class App {
             }
 
 
-            // 2
+            // MARK: 2—VIEW ALL SHOWS
             if (choice.equals("2")) {
 
-                // System.out.println("\n—————————————————————————————————");
-                System.out.println("\nVIEW ALL SHOWS——\n");
+                System.out.println("\n2——VIEW ALL SAVED SHOWS\n");
 
                 for (TVShow show : allShows) {
                     int progress = getUserProgressForShow(sortByTitle, show.getId());
@@ -158,14 +158,12 @@ public class App {
                             + show.getTotalEpisodes());
                 }
 
-                // 3
+                // MARK: 3—SORT ALPHABETICALLY
             } else if (choice.equals("3")) {
                 if (sortByTitle.isEmpty()) {
-                    // System.out.println("\n—————————————————————————————————");
                     System.out.println("\nYou are not currently watching any shows or movies.");
                 } else {
-                    // System.out.println("\n—————————————————————————————————");
-                    System.out.println("\nALL CURRENTLY WATCHING (Sorted alphabetically)——\n");
+                    System.out.println("\n3——ALL CURRENTLY WATCHING (Sorted alphabetically)\n");
                     for (UserTVShowTracker tracker : sortByTitle) {
                         TVShow show = tvShowDao.findTVShowById(tracker.getTvShowId());
                         System.out.println("Title: " + show.getTitle());
@@ -177,10 +175,9 @@ public class App {
                     }
                 }
 
-                // 4
+                // MARK: 4—SORT BY RATING
             } else if (choice.equals("4")) {
-                // System.out.println("\n—————————————————————————————————");
-                System.out.println("\nALL CURRENTLY WATCHING (Sorted by rating)——\n");
+                System.out.println("\n4——ALL CURRENTLY WATCHING (Sorted by rating)\n");
                 for (UserTVShowTracker tracker : sortByRating) {
                     TVShow show = tvShowDao.findTVShowById(tracker.getTvShowId());
                     System.out.println("Title: " + show.getTitle());
@@ -191,7 +188,38 @@ public class App {
                     System.out.println();
                 }
 
+                // MARK: 5—FILTER BY WATCH STATUS
             } else if (choice.equals("5")) {
+                System.out.println("Enter status (planning, watching, completed): ");
+                String addStatus = scanner.nextLine().trim().toLowerCase();
+
+
+                if (!addStatus.equals("planning") && !addStatus.equals("watching")
+                        && !addStatus.equals("completed")) {
+                    System.out.println(
+                            "Invalid status. Please enter planning, watching, or completed.");
+                    continue;
+                }
+                System.out.println("\nFILTER BY WATCH STATUS (planning, watching, completed)——\n");
+                List<UserTVShowTracker> filterByStatus =
+                        trackerDao.findAllByStatus(userId, addStatus);
+                if (filterByStatus.isEmpty()) {
+                    trackerDao.findAllWatchingAlphabetically(userId);
+                } else {
+                    for (UserTVShowTracker tracker : filterByStatus) {
+                        TVShow show = tvShowDao.findTVShowById(tracker.getTvShowId());
+                        System.out.println("Title: " + show.getTitle());
+                        System.out.println("Progress: " + tracker.getProgress() + "/"
+                                + show.getTotalEpisodes());
+                        System.out.println("Status: " + tracker.getStatus());
+                        System.out.println("Rating: " + tracker.getRating());
+                        System.out.println();
+                    }
+                }
+            }
+
+            // MARK: 6—EXIT
+            else if (choice.equals("6")) {
                 break;
             } else {
                 System.out.println("Wrong entry, please try again.");

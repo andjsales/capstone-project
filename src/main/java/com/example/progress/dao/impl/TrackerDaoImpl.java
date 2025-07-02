@@ -18,18 +18,23 @@ import com.example.progress.model.WatchStatus;
 
 public class TrackerDaoImpl implements TrackerDao {
 
+    // MARK: findUserTrackerByUserId()
     @Override
     public UserTVShowTracker findUserTrackerByUserId(int userId, int tvShowId) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findUserTrackerByUserId'");
     }
 
+    // MARK: findAllByStatus()
     @Override
     public List<UserTVShowTracker> findAllByStatus(int userId, WatchStatus status) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAllByStatus'");
     }
 
+
+
+    // MARK: findAllOrderByRating()—
     @Override
     public List<UserTVShowTracker> findAllOrderByRating(int userId) {
 
@@ -59,7 +64,7 @@ public class TrackerDaoImpl implements TrackerDao {
         return trackers;
     }
 
-    // findAllWatchingAlphabetically()
+    // MARK: findAllWatchingAlphabetically()—
     @Override
     public List<UserTVShowTracker> findAllWatchingAlphabetically(int userId) {
 
@@ -92,6 +97,7 @@ public class TrackerDaoImpl implements TrackerDao {
         return trackers;
     }
 
+    // MARK: addUserTVShowTracker()
     @Override
     public void addUserTVShowTracker(int userId, int tvShowId, int progress, String status,
             Integer rating) {
