@@ -14,9 +14,9 @@ public interface TVShowDao {
 
 
     // JDBC code to query all shows and return a list
-    TVShow findAllTVShows(int id);
+    TVShow findTVShowById(int id);
 
-    List<TVShow> findAllTVShows();
+    List<TVShow> findTVShowById();
 
 
     // JDBC code to insert a new show into the database

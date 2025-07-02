@@ -1,5 +1,3 @@
-// Each class should implement the methods from its interface using JDBC + ConnectionManager
-
 package com.example.progress.dao.impl;
 
 import java.io.FileNotFoundException;
@@ -17,8 +15,9 @@ import java.util.List;
 
 public class TVShowDaoImpl implements TVShowDao {
 
+    // findTVShowById()
     @Override
-    public TVShow findAllTVShows(int id) {
+    public TVShow findTVShowById(int id) {
 
         String sql = "SELECT * FROM TVShow WHERE id = ?";
         try (Connection conn = ConnectionManager.getConnection();
@@ -40,8 +39,9 @@ public class TVShowDaoImpl implements TVShowDao {
         return null;
     }
 
+    // findTVShowById()
     @Override
-    public List<TVShow> findAllTVShows() {
+    public List<TVShow> findTVShowById() {
         List<TVShow> shows = new ArrayList<>();
         String sql = "SELECT * FROM TVShow";
         try (Connection conn = ConnectionManager.getConnection();
@@ -59,11 +59,13 @@ public class TVShowDaoImpl implements TVShowDao {
         return shows;
     }
 
+    // findTVShowByTitle()
     @Override
     public TVShow findTVShowByTitle(int id, String title, int total_episodes) {
         return null;
     }
 
+    // findTVShowByTitle()
     @Override
     public TVShow findTVShowByTitle(String title) {
         String sql = "SELECT * FROM TVShow WHERE title = ?";
@@ -83,6 +85,7 @@ public class TVShowDaoImpl implements TVShowDao {
         return null;
     }
 
+    // addTVShow()
     @Override
     public TVShow addTVShow(String title, int total_episodes) {
         String sql = "INSERT INTO TVShow (title, total_episodes) VALUES (?, ?)";
