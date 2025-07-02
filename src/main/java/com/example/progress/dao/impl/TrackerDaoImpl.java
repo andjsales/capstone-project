@@ -13,7 +13,6 @@ import com.example.progress.connection.ConnectionManager;
 import com.example.progress.dao.TrackerDao;
 import com.example.progress.model.TVShow;
 import com.example.progress.model.UserTVShowTracker;
-import com.example.progress.model.WatchStatus;
 
 
 
