@@ -7,7 +7,7 @@ public class UserTVShowTracker {
     private int tvShowId; // foreign key → TVShow table
     private int progress; // how many episodes watched
     private String status; // "Plan to Watch", "Watching", "Completed"
-    private Integer rating; // can be null (Integer wrapper allows that)
+    private Integer rating;
 
 
     // CONSTRUCTORS

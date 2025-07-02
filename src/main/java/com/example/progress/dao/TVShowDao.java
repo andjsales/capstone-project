@@ -7,14 +7,19 @@ import com.example.progress.model.TVShow;
 
 public interface TVShowDao {
 
+    // JDBC code to query DB and return a TVShow
     TVShow findTVShowByTitle(int id, String title, int total_episodes);
 
     TVShow findTVShowByTitle(String title);
 
+
+    // JDBC code to query all shows and return a list
     TVShow findAllTVShows(int id);
 
     List<TVShow> findAllTVShows();
 
+
+    // JDBC code to insert a new show into the database
     TVShow addTVShow(String title, int total_episodes);
 
 }
