@@ -104,9 +104,9 @@ public class App {
 
             System.out.println("\n—————————————————————————————————");
             System.out.println("\n1. Add to watchlist");
-            System.out.println("2. View all tv shows");
-            System.out.println("3. Sort tv shows alphabetically");
-            System.out.println("4. Sort tv shows by rating");
+            System.out.println("2. View All Shows");
+            System.out.println("3. Sort Currently Watching Alphabetically");
+            System.out.println("4. Sort Currently Watching by Rating");
             System.out.println("5. Exit");
             System.out.print("\nChoose an option: ");
 
@@ -149,8 +149,8 @@ public class App {
             // 2
             if (choice.equals("2")) {
 
-                System.out.println("\n—————————————————————————————————");
-                System.out.println("\nALL SAVED TV SHOWS (Sorted alphabetically)\n");
+                // System.out.println("\n—————————————————————————————————");
+                System.out.println("\nVIEW ALL SHOWS——\n");
 
                 for (TVShow show : allShows) {
                     int progress = getUserProgressForShow(sortByTitle, show.getId());
@@ -161,11 +161,11 @@ public class App {
                 // 3
             } else if (choice.equals("3")) {
                 if (sortByTitle.isEmpty()) {
-                    System.out.println("\n—————————————————————————————————");
+                    // System.out.println("\n—————————————————————————————————");
                     System.out.println("\nYou are not currently watching any shows or movies.");
                 } else {
-                    System.out.println("\n—————————————————————————————————");
-                    System.out.println("\nCurrently Watching Shows——\n");
+                    // System.out.println("\n—————————————————————————————————");
+                    System.out.println("\nALL CURRENTLY WATCHING (Sorted alphabetically)——\n");
                     for (UserTVShowTracker tracker : sortByTitle) {
                         TVShow show = tvShowDao.findTVShowById(tracker.getTvShowId());
                         System.out.println("Title: " + show.getTitle());
@@ -179,8 +179,8 @@ public class App {
 
                 // 4
             } else if (choice.equals("4")) {
-                System.out.println("\n—————————————————————————————————");
-                System.out.println("\nALL SAVED TV SHOWS (Sorted by rating)\n");
+                // System.out.println("\n—————————————————————————————————");
+                System.out.println("\nALL CURRENTLY WATCHING (Sorted by rating)——\n");
                 for (UserTVShowTracker tracker : sortByRating) {
                     TVShow show = tvShowDao.findTVShowById(tracker.getTvShowId());
                     System.out.println("Title: " + show.getTitle());
