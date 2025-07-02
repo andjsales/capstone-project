@@ -27,9 +27,30 @@ public class TrackerDaoImpl implements TrackerDao {
 
     // MARK: findAllByStatus()
     @Override
-    public List<UserTVShowTracker> findAllByStatus(int userId, WatchStatus status) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAllByStatus'");
+    public List<UserTVShowTracker> findAllByStatus(int userId, String status) {
+        List<UserTVShowTracker> trackers = new ArrayList<>();
+        String sql =
+                "SELECT t.* FROM UserTVShowTracker t " + "JOIN TVShow s ON t.tv_show_id = s.id "
+                        + "WHERE t.user_id = ? AND t.status = ? " + "ORDER BY s.title ASC";
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            stmt.setString(2, status); // use the string directly
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                UserTVShowTracker tracker = new UserTVShowTracker();
+                tracker.setId(rs.getInt("id"));
+                tracker.setUserId(rs.getInt("user_id"));
+                tracker.setTvShowId(rs.getInt("tv_show_id"));
+                tracker.setProgress(rs.getInt("progress"));
+                tracker.setStatus(rs.getString("status"));
+                tracker.setRating(rs.getObject("rating") != null ? rs.getInt("rating") : null);
+                trackers.add(tracker);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return trackers;
     }
 
 
