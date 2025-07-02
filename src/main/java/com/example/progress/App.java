@@ -83,7 +83,7 @@ public class App {
                 System.out.println("\nWrong entry. Please choose 1 or 2.");
             }
         }
-
+        while (true) {
         // ——show menu using loggedInUser.getId()
 
         loggedInUser.getId();
@@ -169,5 +169,5 @@ public class App {
 
         // create/update UserTVShowTracker entry for this user and show
     }
-
+    }
 }
