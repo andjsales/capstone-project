@@ -72,12 +72,12 @@ Sample data is auto-loaded via the [`progress_tracker.sql`](./progress_tracker.s
 ## Methods to add
 
 - addTVShowToList()
-- changeTVShowWatchStatus()
-- changeTVShowRating()
+- updateTVShowWatchStatus()
+- updateTVShowRating()
 - updateTVShowProgress()
 - fix findAllShows() method
 
-## order of operations
+## console menu——order of operations
 
 1. login/exit——choose an option (1 or 2)
 2. type in username——enter
