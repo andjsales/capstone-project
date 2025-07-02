@@ -1,5 +1,3 @@
-
-
 package com.example.progress.dao;
 
 import com.example.progress.model.UserTVShowTracker;
