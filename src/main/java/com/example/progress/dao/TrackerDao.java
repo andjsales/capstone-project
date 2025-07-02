@@ -1,14 +1,13 @@
 package com.example.progress.dao;
 
 import com.example.progress.model.UserTVShowTracker;
-import com.example.progress.model.WatchStatus;
 import java.util.List;
 
 public interface TrackerDao {
 
     UserTVShowTracker findUserTrackerByUserId(int userId, int tvShowId);
 
-    List<UserTVShowTracker> findAllByStatus(int userId, WatchStatus status);
+    List<UserTVShowTracker> findAllByStatus(int userId, String status);
 
     List<UserTVShowTracker> findAllOrderByRating(int userId);
 
