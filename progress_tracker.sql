@@ -32,7 +32,7 @@ CREATE TABLE UserTVShowTracker (
     tv_show_id INT,
     progress INT DEFAULT 0,
     -- ENUM restricts status values
-    status ENUM('Plan to Watch', 'Watching', 'Completed') NOT NULL,
+    status ENUM('planning', 'watching', 'completed'),
     -- CHECK ensures ratings are between 1-10
     rating INT CHECK (rating BETWEEN 1 AND 10),
     -- ON DELETE CASCADE: deleting a user or show removes related tracker rows
