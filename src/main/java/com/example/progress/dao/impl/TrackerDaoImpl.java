@@ -60,9 +60,10 @@ public class TrackerDaoImpl implements TrackerDao {
     public List<UserTVShowTracker> findAllOrderByRating(int userId) {
 
         List<UserTVShowTracker> trackers = new ArrayList<>();
-        String sql = "SELECT t.* FROM UserTVShowTracker t "
-                + "JOIN TVShow s ON t.tv_show_id = s.id "
-                + "WHERE t.user_id = ? AND t.status = 'Watching'" + "ORDER BY t.rating DESC";
+        String sql = "SELECT t.* FROM UserTVShowTracker t " + //
+                "JOIN TVShow s ON t.tv_show_id = s.id " + //
+                "WHERE t.user_id = ? AND t.status = 'Watching'" + //
+                "ORDER BY t.rating DESC"; //
 
         try (Connection conn = ConnectionManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
