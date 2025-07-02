@@ -32,21 +32,45 @@ public class TrackerDaoImpl implements TrackerDao {
 
     @Override
     public List<UserTVShowTracker> findAllOrderByRating(int userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAllOrderByRating'");
+
+        List<UserTVShowTracker> trackers = new ArrayList<>();
+        String sql = "SELECT t.* FROM UserTVShowTracker t "
+                + "JOIN TVShow s ON t.tv_show_id = s.id "
+                + "WHERE t.user_id = ? AND t.status = 'Watching'" + "ORDER BY t.rating DESC";
+
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                UserTVShowTracker tracker = new UserTVShowTracker();
+                tracker.setId(rs.getInt("id"));
+                tracker.setUserId(rs.getInt("user_id"));
+                tracker.setTvShowId(rs.getInt("tv_show_id"));
+                tracker.setProgress(rs.getInt("progress"));
+                tracker.setStatus(rs.getString("status"));
+                tracker.setRating(rs.getObject("rating") != null ? rs.getInt("rating") : null);
+                trackers.add(tracker);
+            }
+        } catch (SQLException | IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return trackers;
     }
 
     // findAllWatchingAlphabetically()
     @Override
     public List<UserTVShowTracker> findAllWatchingAlphabetically(int userId) {
 
+        // define an empty list to hold results
+        // will contain matching UserTVShowTracker objects for the given userId
         List<UserTVShowTracker> trackers = new ArrayList<>();
 
         // look for rows in UserTVShowTracker for user_id
         String sql =
                 "SELECT t.* FROM UserTVShowTracker t " + "JOIN TVShow s ON t.tv_show_id = s.id "
                         + "WHERE t.user_id = ? AND t.status = 'Watching'" + "ORDER BY s.title ASC";
-
 
         try (Connection conn = ConnectionManager.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
