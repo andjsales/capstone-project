@@ -137,7 +137,6 @@ public class TrackerDaoImpl implements TrackerDao {
                 pstmt.setNull(5, java.sql.Types.INTEGER);
             }
             pstmt.executeUpdate();
-            System.out.println("Tracker entry added!");
         } catch (Exception e) {
             e.printStackTrace();
         }
