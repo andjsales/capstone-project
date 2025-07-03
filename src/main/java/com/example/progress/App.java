@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import com.example.progress.connection.ConnectionManager;
 import com.example.progress.dao.TVShowDao;
@@ -31,7 +32,7 @@ public class App {
     public static void main(String[] args)
             throws FileNotFoundException, IOException, ClassNotFoundException {
 
-        // MARK: LOGIC TO CONNECT TO DATABASE
+        // MARK: CONNECT DATABASE—
         try {
             Connection conn = ConnectionManager.getConnection();
             System.out.println("\nConnected to the database!");
@@ -45,14 +46,15 @@ public class App {
         User loggedInUser = null; // STORING USER INFO
 
         // ———————————————————————————————————————————————————————————————————————
-        // MARK: Login + Exit options
+        // MARK: LOGIN—EXIT—CREATE ACCOUNT
 
         System.out.println("\n===== Your Personal Watchlist =====");
 
         while (true) {
             System.out.println("\n1. Login");
-            System.out.println("2. Exit");
-            System.out.print("\nChoose an option: \n");
+            System.out.println("2. Create Account");
+            System.out.println("3. Exit");
+            System.out.print("\nEnter a number: \n");
 
             String choice = scanner.nextLine();
 
@@ -62,7 +64,7 @@ public class App {
                 System.out.print("Password: ");
                 String password = scanner.nextLine();
 
-                // MARK: check credentials using DAO
+                // MARK: check credentials using DAO—
                 loggedInUser = userDao.findByUsernameAndPassword(username, password);
 
                 if (loggedInUser != null) {
@@ -72,17 +74,40 @@ public class App {
 
                     break; // exit login loop ——> continue
 
-                    // MARK: You are now logged in!
+                    // MARK: You are now logged in!—
 
                 } else {
                     System.out.println("\nIncorrect login——please try again.");
                 }
 
             } else if (choice.equals("2")) {
+                System.out.print("\nChoose a username: ");
+                String newUsername = scanner.nextLine().trim();
+                System.out.print("Choose a password: ");
+                String newPassword = scanner.nextLine().trim();
+
+                User existingUser = userDao.findByUsernameAndPassword(newUsername, newPassword);
+                if (existingUser != null) {
+                    System.out.println("Username already taken. Please try a different one.");
+                } else {
+                    String sql = "INSERT INTO User (username, password) VALUES (?, ?)";
+                    try (Connection conn = ConnectionManager.getConnection();
+                            PreparedStatement stmt = conn.prepareStatement(sql)) {
+                        stmt.setString(1, newUsername);
+                        stmt.setString(2, newPassword);
+                        stmt.executeUpdate();
+                        System.out.println("\nAccount created successfully! You can now log in.");
+                    } catch (Exception e) {
+                        System.out.println("Error creating account.");
+                        e.printStackTrace();
+                    }
+                }
+
+            } else if (choice.equals("3")) {
                 System.out.println("Exiting program. Goodbye!");
                 System.exit(0);
             } else {
-                System.out.println("\nWrong entry. Please choose 1 or 2.");
+                System.out.println("\nWrong entry. Please choose 1, 2 or 3.");
             }
         }
         while (true) {
@@ -102,7 +127,7 @@ public class App {
             List<TVShow> allShows = tvShowDao.findTVShowById();
 
 
-            // MARK: —MENU OPTIONS
+            // MARK: MENU OPTIONS—
             System.out.println("\n1. Add to watchlist");
             System.out.println("2. View all saved shows");
             System.out.println("3. Sort currently watching alphabetically");
@@ -161,6 +186,8 @@ public class App {
                 // MARK: 3—SORT ALPHABETICALLY
             } else if (choice.equals("3")) {
                 if (sortByTitle.isEmpty()) {
+                    System.out.println("\n3——ALL CURRENTLY WATCHING (Sorted alphabetically)\n");
+
                     System.out.println("\nYou are not currently watching any shows or movies.");
                 } else {
                     System.out.println("\n3——ALL CURRENTLY WATCHING (Sorted alphabetically)\n");
@@ -178,6 +205,10 @@ public class App {
                 // MARK: 4—SORT BY RATING
             } else if (choice.equals("4")) {
                 System.out.println("\n4——ALL CURRENTLY WATCHING (Sorted by rating)\n");
+                if (sortByRating.isEmpty()) {
+                    System.out.println("\n3——ALL CURRENTLY WATCHING (Sorted alphabetically)\n");
+                    System.out.println("\nYou are not currently watching any shows or movies.");
+                }
                 for (UserTVShowTracker tracker : sortByRating) {
                     TVShow show = tvShowDao.findTVShowById(tracker.getTvShowId());
                     System.out.println("Title: " + show.getTitle());
@@ -200,7 +231,7 @@ public class App {
                             "Invalid status. Please enter planning, watching, or completed.");
                     continue;
                 }
-                System.out.println("\nFILTER BY WATCH STATUS (planning, watching, completed)——\n");
+                System.out.println("\nFILTER BY WATCH STATUS (planning, watching, completed)——");
                 List<UserTVShowTracker> filterByStatus =
                         trackerDao.findAllByStatus(userId, addStatus);
                 if (filterByStatus.isEmpty()) {
