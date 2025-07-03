@@ -1,6 +1,8 @@
 # Progress Tracker
 
-A Java console application that helps users track their TV show watching progress. Built using the DAO pattern, JDBC, and a MySQL backend, this project demonstrates modular software development, relational database interaction, and Maven-based project structure.
+## Description
+
+This is a Java console application built to allow users to manage and track their movie/show watchlists. Users can log in, add shows, update their progress, filter by watch status, and rate completed shows. This app uses a MySQL database and follows the DAO pattern for clean, modular code.
 
 ## Features
 
@@ -14,10 +16,10 @@ A Java console application that helps users track their TV show watching progres
 ## Tech Stack
 
 - Java 11
-- JDBC (Java Database Connectivity)
+- JDBC
 - MySQL
-- Maven (project management)
-- DAO Pattern (Data Access Object)
+- Maven
+- DAO Pattern
 
 ## Database Schema
 
@@ -27,8 +29,6 @@ Includes three main tables:
 1. **User**: stores login credentials
 2. **TVShow**: catalog of shows with total episodes
 3. **UserTVShowTracker**: tracks users’ show progress, watch status, and ratings
-
-Sample data is auto-loaded via the [`progress_tracker.sql`](./progress_tracker.sql) script.
 
 ## Setup Instructions
 
