@@ -16,4 +16,6 @@ public interface TrackerDao {
     void addUserTVShowTracker(int userId, int tvShowId, int progress, String status,
             Integer rating);
 
+    void updateRating(int userId, int tvShowId, Integer rating);
+
 }

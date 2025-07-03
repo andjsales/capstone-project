@@ -141,4 +141,23 @@ public class TrackerDaoImpl implements TrackerDao {
             e.printStackTrace();
         }
     }
+
+    // MARK: updateRating()
+    @Override
+    public void updateRating(int userId, int tvShowId, Integer rating) {
+        String sql = "UPDATE UserTVShowTracker SET rating = ? WHERE user_id = ? AND tv_show_id = ?";
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            if (rating == null) {
+                stmt.setNull(1, java.sql.Types.INTEGER);
+            } else {
+                stmt.setInt(1, rating);
+            }
+            stmt.setInt(2, userId);
+            stmt.setInt(3, tvShowId);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
