@@ -58,13 +58,13 @@ INSERT INTO TVShow (title, total_episodes) VALUES -- sample TV shows data
 
 
 INSERT INTO UserTVShowTracker (user_id, tv_show_id, progress, status, rating) VALUES -- sample tracking info data
-(1, 1, 123, 'Completed', 5),
-(1, 2, 244, 'Completed', 10),
-(1, 3, 51, 'Completed', 7),
-(2, 1, 51, 'Watching', NULL),
-(2, 2, 2, 'Watching', 10),
-(2, 3, 0, 'Plan to Watch', NULL),
-(2, 7, 73, 'Completed', 6),
-(2, 8, 236, 'Completed', 9),
-(2, 9, 5, 'Watching', 7),
-(2, 10, 0, 'Plan to Watch', NULL);
+(1, 1, 123, 'completed', 5),
+(1, 2, 244, 'completed', 10),
+(1, 3, 51, 'completed', 7),
+(2, 1, 51, 'watching', NULL),
+(2, 2, 2, 'watching', 10),
+(2, 3, 0, 'planning', NULL),
+(2, 7, 73, 'completed', 6),
+(2, 8, 236, 'completed', 9),
+(2, 9, 5, 'watching', 7),
+(2, 10, 0, 'planning', NULL);
