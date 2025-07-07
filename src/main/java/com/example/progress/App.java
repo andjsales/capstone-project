@@ -347,32 +347,49 @@ public class App {
                     }
                 }
 
-                // MARK: 7—SORT BY RATING
-            } else if (choice.equals("7")) {
-                System.out.println("\n7——ALL CURRENTLY WATCHING (Sorted by rating):\n");
 
+
+                // MARK: 10 — sort by rating
+
+            } else if (choice.equals("10")) {
                 if (allShows.isEmpty()) {
                     System.out.println("\nNo shows added.");
                 } else {
-                    System.out.println("\n7——ALL SHOWS (Sorted by rating)\n");
-                    for (TVShow show : allShows) {
-                        UserTVShowTracker tracker = null;
+                    System.out.println("\n10——SORT BY RATING (All Shows):\n");
+
+                    // Step 1: Build a list of pairs (show, rating)
+                    List<TVShow> showsCopy = new ArrayList<>(allShows);
+                    showsCopy.sort((show1, show2) -> {
+                        Integer rating1 = null;
+                        Integer rating2 = null;
+                        for (UserTVShowTracker t : sortByRating) {
+                            if (t.getTvShowId() == show1.getId())
+                                rating1 = t.getRating();
+                            if (t.getTvShowId() == show2.getId())
+                                rating2 = t.getRating();
+                        }
+                        // Sort: higher ratings first, nulls last
+                        if (rating1 == null && rating2 == null)
+                            return 0;
+                        if (rating1 == null)
+                            return 1;
+                        if (rating2 == null)
+                            return -1;
+                        return rating2.compareTo(rating1);
+                    });
+
+                    // Step 2: Display the sorted list
+                    for (int i = 0; i < showsCopy.size(); i++) {
+                        TVShow show = showsCopy.get(i);
+                        Integer rating = null;
                         for (UserTVShowTracker t : sortByRating) {
                             if (t.getTvShowId() == show.getId()) {
                                 tracker = t;
                                 break;
                             }
                         }
-                        int progress = (tracker != null) ? tracker.getProgress() : 0;
-                        String status = (tracker != null) ? tracker.getStatus() : "planning";
-                        String rating = (tracker != null && tracker.getRating() != null)
-                                ? tracker.getRating().toString()
-                                : "none";
-                        System.out.println("Title: " + show.getTitle());
-                        System.out.println("Progress: " + progress + "/" + show.getTotalEpisodes());
-                        System.out.println("Status: " + status);
-                        System.out.println("Rating: " + rating);
-                        System.out.println();
+                        System.out.println((rating != null ? "[ " + rating + "/10" + " ]" : "n/a")
+                                + " - " + show.getTitle());
                     }
                 }
 
