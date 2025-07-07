@@ -312,16 +312,19 @@ public class App {
                     System.out.println("Show not added.");
                 }
 
-                // MARK: 6—SORT ALPHABETICALLY
-            } else if (choice.equals("6")) {
-
+                // MARK: 9 — sort alphabetically
+            } else if (choice.equals("9") || choice.equals("7")) {
                 if (allShows.isEmpty()) {
                     System.out.println("\nNo shows added.");
                 } else {
                     System.out.println("\n6——ALL SHOWS (Sorted alphabetically)\n");
-                    // Optionally sort allShows alphabetically if not already sorted
-                    for (TVShow show : allShows) {
-                        // Find if user is tracking this show
+                    System.out.println("\n9——SORT ALPHABETICALLY (All Shows):\n");
+                    // sort all shows alphabetically by title
+                    List<TVShow> showsCopy = new ArrayList<>(allShows);
+                    showsCopy.sort((a, b) -> a.getTitle().compareToIgnoreCase(b.getTitle()));
+                    // loop thru each show
+                    for (TVShow show : showsCopy) {
+                        // look for tracker object that matches each show's ID
                         UserTVShowTracker tracker = null;
                         for (UserTVShowTracker t : sortByTitle) {
                             if (t.getTvShowId() == show.getId()) {
@@ -329,15 +332,17 @@ public class App {
                                 break;
                             }
                         }
+                        // if tracker exists > get values
                         int progress = (tracker != null) ? tracker.getProgress() : 0;
                         String status = (tracker != null) ? tracker.getStatus() : "planning";
-                        String rating = (tracker != null && tracker.getRating() != null)
+                        String rating = (tracker != null //
+                                && tracker.getRating() != null) //
                                 ? tracker.getRating().toString()
-                                : "none";
-                        System.out.println("Title: " + show.getTitle());
-                        System.out.println("Progress: " + progress + "/" + show.getTotalEpisodes());
-                        System.out.println("Status: " + status);
-                        System.out.println("Rating: " + rating);
+                                        : "n/a";
+                        System.out.println("\"" + show.getTitle() + "\"");
+                        System.out.println("Progress——" + progress + "/" + show.getTotalEpisodes());
+                        System.out.println("Status——" + status);
+                        System.out.println("Rating——" + rating);
                         System.out.println();
                     }
                 }
