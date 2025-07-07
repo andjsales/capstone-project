@@ -285,9 +285,229 @@ public class App {
                         newRating);
                 System.out.println("\nRating updated!");
 
-                // MARK: 4—VIEW ALL SHOWS
+                // MARK: 4 — update show status
+
             } else if (choice.equals("4")) {
-                System.out.println("\n4——VIEWING ALL AVAILABLE SHOWS:\n");
+                if (allShows.isEmpty()) {
+                    System.out.println("No shows available.");
+                    continue;
+                }
+                System.out.println("\nSelect a show to update the status: ");
+                for (int i = 0; i < allShows.size(); i++) {
+                    TVShow show = allShows.get(i);
+                    String status = "not tracked";
+                    for (UserTVShowTracker t : sortByTitle) {
+                        if (t.getTvShowId() == show.getId()) {
+                            status = t.getStatus();
+                            break;
+                        }
+                    }
+                    System.out.println(
+                            (i + 1) + ". " + show.getTitle() + " (Current status: " + status + ")");
+                }
+                String input = scanner.nextLine().trim();
+                if (input.equals("0"))
+                    continue;
+                int idx;
+                try {
+                    idx = Integer.parseInt(input) - 1;
+                    if (idx < 0 || idx >= allShows.size()) {
+                        System.out.println("Invalid selection.");
+                        continue;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a valid number.");
+                    continue;
+                }
+                TVShow selectedShow = allShows.get(idx);
+                // Find tracker
+                UserTVShowTracker tracker = null;
+                for (UserTVShowTracker t : sortByTitle) {
+                    if (t.getTvShowId() == selectedShow.getId()) {
+                        tracker = t;
+                        break;
+                    }
+                }
+                if (tracker == null) {
+                    System.out.println("You are not tracking this show yet.");
+                    continue;
+                }
+                System.out.print("Enter new status (planning, watching, completed): ");
+                String newStatus = scanner.nextLine().trim().toLowerCase();
+                if (newStatus.equals("0"))
+                    continue;
+                if (!newStatus.equals("planning") && !newStatus.equals("watching")
+                        && !newStatus.equals("completed")) {
+                    System.out.println("Invalid status.");
+                    continue;
+                }
+                // Update status in DB
+                try (Connection conn = ConnectionManager.getConnection();
+                        PreparedStatement stmt = conn.prepareStatement(
+                                "UPDATE UserTVShowTracker SET status = ? WHERE user_id = ? AND tv_show_id = ?")) {
+                    stmt.setString(1, newStatus);
+                    stmt.setInt(2, userId);
+                    stmt.setInt(3, selectedShow.getId());
+                    stmt.executeUpdate();
+                    System.out.println("Status updated!");
+                } catch (Exception e) {
+                    System.out.println("Failed to update status.");
+                    e.printStackTrace();
+                }
+
+                // MARK: 5 — update show rating
+
+                // check for option 5
+            } else if (choice.equals("5")) {
+                if (allShows.isEmpty()) {
+
+                    System.out.println("\nNo shows added.");
+                } else {
+                    System.out.println("\n10——ALL SHOWS (Sorted by rating)\n");
+
+                    List<TVShow> showsCopy = new ArrayList<>(allShows);
+                    showsCopy.sort((show1, show2) -> {
+                        Integer rating1 = null;
+                        Integer rating2 = null;
+                        for (UserTVShowTracker t : sortByRating) {
+                            if (t.getTvShowId() == show1.getId())
+                                rating1 = t.getRating();
+                            if (t.getTvShowId() == show2.getId())
+                                rating2 = t.getRating();
+                        }
+
+                        if (rating1 == null && rating2 == null)
+                            return 0;
+                        if (rating1 == null)
+                            return 1;
+                        if (rating2 == null)
+                            return -1;
+                        return rating2.compareTo(rating1);
+                    });
+
+                    for (int i = 0; i < showsCopy.size(); i++) {
+                        TVShow show = showsCopy.get(i);
+                        Integer rating = null;
+                        for (UserTVShowTracker t : sortByRating) {
+                            if (t.getTvShowId() == show.getId()) {
+                                rating = t.getRating();
+                                break;
+                            }
+                        }
+                        System.out.println((i + 1) + ". "
+                                + (rating != null ? rating + "/10" + " - " + show.getTitle()
+                                        : "n/a" + " - " + show.getTitle()));
+                    }
+                }
+                // get User selection
+                System.out.println("\nSelect a show to update: ");
+                String input = scanner.nextLine().trim();
+                // go back
+                if (input.equals("0"))
+                    continue;
+                int idx;
+                List<TVShow> showsCopy = new ArrayList<>(allShows);
+                // error handeling
+                try {
+                    idx = Integer.parseInt(input) - 1;
+                    if (idx < 0 || idx >= showsCopy.size()) {
+
+                        System.out.println("Invalid selection.");
+                        continue;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a number.");
+                    continue;
+                }
+                // prompt for new rating
+                TVShow selectedShow = showsCopy.get(idx);
+                System.out.print("\nEnter new rating (1-10): ");
+                String ratingInput = scanner.nextLine().trim();
+                if (ratingInput.equals("0"))
+                    continue;
+                Integer newRating = null;
+                if (!ratingInput.isEmpty()) {
+                    try {
+                        int val = Integer.parseInt(ratingInput);
+                        if (val < 1 || val > 10) {
+                            System.out.println("Rating must be 1-10.");
+                            continue;
+                        }
+                        newRating = val;
+                    } catch (NumberFormatException e) {
+                        System.out.println("Please enter a valid number or leave blank.");
+                        continue;
+                    }
+                }
+                // update rating
+                // Check if tracker exists
+                UserTVShowTracker selectedTracker = null;
+                for (UserTVShowTracker t : sortByRating) {
+                    if (t.getTvShowId() == selectedShow.getId()) {
+                        selectedTracker = t;
+                        break;
+                    }
+                }
+
+                if (selectedTracker != null) {
+                    // Update existing tracker (just update the rating)
+                    trackerDao.updateRating(userId, selectedShow.getId(), newRating);
+                    System.out.println("\n> Rating updated successfully.");
+                } else {
+                    // Add new tracker with rating (default progress/status)
+                    trackerDao.addUserTVShowTracker(userId, selectedShow.getId(), 0, "planning",
+                            newRating);
+                    System.out.println("\n> Rating added successfully.");
+
+                } // MARK: 6 — delete show entry
+
+            } else if (choice.equals("6")) {
+                if (allShows.isEmpty()) {
+                    System.out.println("No shows available.");
+                    continue;
+                }
+                System.out
+                        .println("\nSelect a show to delete from your tracker (or 0 to go back):");
+                for (int i = 0; i < allShows.size(); i++) {
+                    TVShow show = allShows.get(i);
+                    System.out.println((i + 1) + ". " + show.getTitle());
+                }
+                String input = scanner.nextLine().trim();
+                if (input.equals("0"))
+                    continue;
+                int idx;
+                try {
+                    idx = Integer.parseInt(input) - 1;
+                    if (idx < 0 || idx >= allShows.size()) {
+                        System.out.println("Invalid selection.");
+                        continue;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a valid number.");
+                    continue;
+                }
+                TVShow selectedShow = allShows.get(idx);
+                // Delete from tracker
+                try (Connection conn = ConnectionManager.getConnection();
+                        PreparedStatement stmt = conn.prepareStatement(
+                                "DELETE FROM UserTVShowTracker WHERE user_id = ? AND tv_show_id = ?")) {
+                    stmt.setInt(1, userId);
+                    stmt.setInt(2, selectedShow.getId());
+                    int affected = stmt.executeUpdate();
+                    if (affected > 0) {
+                        System.out.println("Show entry deleted from your tracker!");
+                    } else {
+                        System.out.println("You are not tracking this show.");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Failed to delete show entry.");
+                    e.printStackTrace();
+                }
+
+                // MARK: 7 — view all shows
+
+            } else if (choice.equals("7")) {
+                System.out.println("\n7——VIEWING ALL AVAILABLE SHOWS:\n");
                 for (TVShow show : allShows) {
                     int progress = getUserProgressForShow(sortByTitle, show.getId());
                     System.out.println('"' + show.getTitle() + '"' + " — " + progress + "/"
