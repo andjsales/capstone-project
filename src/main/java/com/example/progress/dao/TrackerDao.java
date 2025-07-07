@@ -18,4 +18,9 @@ public interface TrackerDao {
 
     void updateRating(int userId, int tvShowId, Integer rating);
 
+    // average rating for a show
+    public Double getAverageRatingForShow(int tvShowId);
+
+    // user counts by status
+    public int countUsersByStatus(int tvShowId, String status);
 }

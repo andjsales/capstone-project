@@ -115,7 +115,10 @@ public class App {
 
             // MARK: menu-options
 
+            // System.out.println("\n• • • • • • • • • • • • • • • • • •\n");
+            // System.out.println(" ");
             System.out.println("\n• • • • • • • • • • • • • • • • • •\n");
+            System.out.println(" ");
             System.out.println("0 - Go back");
             System.out.println("1 - Exit");
             System.out.println(" ");
@@ -513,6 +516,16 @@ public class App {
                     int progress = getUserProgressForShow(sortByTitle, show.getId());
                     System.out.println('"' + show.getTitle() + '"' + " — " + progress + "/"
                             + show.getTotalEpisodes());
+                    Double avgRating = trackerDao.getAverageRatingForShow(show.getId());
+                    int planning = trackerDao.countUsersByStatus(show.getId(), "planning");
+                    int watching = trackerDao.countUsersByStatus(show.getId(), "watching");
+                    int completed = trackerDao.countUsersByStatus(show.getId(), "completed");
+                    System.out
+                            .println("Average Rating: " + (avgRating != null ? avgRating : "n/a"));
+                    System.out.println("Planning: " + planning + ", Watching: " + watching
+                            + ", Completed: " + completed);
+                    System.out.println();
+
                 }
 
                 // MARK: 8 — search for title
@@ -529,6 +542,15 @@ public class App {
                     int progress = getUserProgressForShow(sortByTitle, foundShow.getId());
                     System.out
                             .println("Progress: " + progress + "/" + foundShow.getTotalEpisodes());
+                    Double avgRating = trackerDao.getAverageRatingForShow(foundShow.getId());
+                    int planning = trackerDao.countUsersByStatus(foundShow.getId(), "planning");
+                    int watching = trackerDao.countUsersByStatus(foundShow.getId(), "watching");
+                    int completed = trackerDao.countUsersByStatus(foundShow.getId(), "completed");
+                    System.out
+                            .println("Average Rating: " + (avgRating != null ? avgRating : "n/a"));
+                    System.out.println("Planning: " + planning + ", Watching: " + watching
+                            + ", Completed: " + completed);
+
                 } else {
                     System.out.println("Show not added.");
                 }
@@ -560,10 +582,19 @@ public class App {
                                         ? tracker.getRating().toString()
                                         : "n/a";
                         System.out.println("\"" + show.getTitle() + "\"");
-                        System.out.println("Progress——" + progress + "/" + show.getTotalEpisodes());
-                        System.out.println("Status——" + status);
-                        System.out.println("Rating——" + rating);
+                        System.out.println("Progress: " + progress + "/" + show.getTotalEpisodes());
+                        System.out.println("Status: " + status);
+                        System.out.println("Rating: " + rating);
+                        Double avgRating = trackerDao.getAverageRatingForShow(show.getId());
+                        int planning = trackerDao.countUsersByStatus(show.getId(), "planning");
+                        int watching = trackerDao.countUsersByStatus(show.getId(), "watching");
+                        int completed = trackerDao.countUsersByStatus(show.getId(), "completed");
+                        System.out.println(
+                                "Average Rating: " + (avgRating != null ? avgRating : "n/a"));
+                        System.out.println("Planning: " + planning + ", Watching: " + watching
+                                + ", Completed: " + completed);
                         System.out.println();
+                    }
                     }
                 }
 
@@ -571,7 +602,7 @@ public class App {
 
                 // MARK: 10 — sort by rating
 
-            } else if (choice.equals("10")) {
+            else if (choice.equals("10")) {
                 if (allShows.isEmpty()) {
                     System.out.println("\nNo shows added.");
                 } else {
@@ -610,6 +641,16 @@ public class App {
                         }
                         System.out.println((rating != null ? "[ " + rating + "/10" + " ]" : "n/a")
                                 + " - " + show.getTitle());
+                        Double avgRating = trackerDao.getAverageRatingForShow(show.getId());
+                        int planning = trackerDao.countUsersByStatus(show.getId(), "planning");
+                        int watching = trackerDao.countUsersByStatus(show.getId(), "watching");
+                        int completed = trackerDao.countUsersByStatus(show.getId(), "completed");
+                        System.out.println(
+                                "Average Rating: " + (avgRating != null ? avgRating : "n/a"));
+                        System.out.println("Planning: " + planning + ", Watching: " + watching
+                                + ", Completed: " + completed);
+                        System.out.println();
+
                     }
                 }
 
@@ -646,6 +687,14 @@ public class App {
                                 + show.getTotalEpisodes());
                         System.out.println("—Status: " + tracker.getStatus());
                         System.out.println("—Rating: " + tracker.getRating());
+                        Double avgRating = trackerDao.getAverageRatingForShow(show.getId());
+                        int planning = trackerDao.countUsersByStatus(show.getId(), "planning");
+                        int watching = trackerDao.countUsersByStatus(show.getId(), "watching");
+                        int completed = trackerDao.countUsersByStatus(show.getId(), "completed");
+                        System.out.println(
+                                "Average Rating: " + (avgRating != null ? avgRating : "n/a"));
+                        System.out.println("Planning: " + planning + ", Watching: " + watching
+                                + ", Completed: " + completed);
                         System.out.println();
                     }
                 }

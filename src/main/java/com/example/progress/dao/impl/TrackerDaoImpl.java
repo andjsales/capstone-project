@@ -18,14 +18,14 @@ import com.example.progress.model.UserTVShowTracker;
 
 public class TrackerDaoImpl implements TrackerDao {
 
-    // MARK: findUserTrackerByUserId()
+    // MARK: findUserTrackerByUserId
     @Override
     public UserTVShowTracker findUserTrackerByUserId(int userId, int tvShowId) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findUserTrackerByUserId'");
     }
 
-    // MARK: findAllByStatus()
+    // MARK: findAllByStatus
     @Override
     public List<UserTVShowTracker> findAllByStatus(int userId, String status) {
         List<UserTVShowTracker> trackers = new ArrayList<>();
@@ -55,7 +55,7 @@ public class TrackerDaoImpl implements TrackerDao {
 
 
 
-    // MARK: findAllOrderByRating()—
+    // MARK: findAllOrderByRating
     @Override
     public List<UserTVShowTracker> findAllOrderByRating(int userId) {
 
@@ -86,7 +86,7 @@ public class TrackerDaoImpl implements TrackerDao {
         return trackers;
     }
 
-    // MARK: findAllWatchingAlphabetically()—
+    // MARK: findAllWatchingAlphabetically
     @Override
     public List<UserTVShowTracker> findAllWatchingAlphabetically(int userId) {
 
@@ -119,7 +119,7 @@ public class TrackerDaoImpl implements TrackerDao {
         return trackers;
     }
 
-    // MARK: addUserTVShowTracker()
+    // MARK: addUserTVShowTracker
     @Override
     public void addUserTVShowTracker(int userId, int tvShowId, int progress, String status,
             Integer rating) {
@@ -142,7 +142,7 @@ public class TrackerDaoImpl implements TrackerDao {
         }
     }
 
-    // MARK: updateRating()
+    // MARK: updateRating
     @Override
     public void updateRating(int userId, int tvShowId, Integer rating) {
         String sql = "UPDATE UserTVShowTracker SET rating = ? WHERE user_id = ? AND tv_show_id = ?";
@@ -159,5 +159,37 @@ public class TrackerDaoImpl implements TrackerDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // MARK: getAverageRatingForShow
+    public Double getAverageRatingForShow(int tvShowId) {
+        String sql =
+                "SELECT AVG(rating) FROM UserTVShowTracker WHERE tv_show_id = ? AND rating IS NOT NULL";
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, tvShowId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+                return rs.getDouble(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // MARK: countUsersByStatus
+    public int countUsersByStatus(int tvShowId, String status) {
+        String sql = "SELECT COUNT(*) FROM UserTVShowTracker WHERE tv_show_id = ? AND status = ?";
+        try (Connection conn = ConnectionManager.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, tvShowId);
+            stmt.setString(2, status);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+                return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
