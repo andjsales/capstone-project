@@ -294,17 +294,17 @@ public class App {
                             + show.getTotalEpisodes());
                 }
 
-                // MARK: 5—SEARCH FOR TITLE
-            } else if (choice.equals("5")) {
-                System.out.print("Title Name: ");
+                // MARK: 8 — search for title
+
+            } else if (choice.equals("8")) {
+                System.out.print("\nTitle: ");
                 String searchTitle = scanner.nextLine().trim();
                 if (searchTitle.equals("0"))
                     continue;
                 TVShow foundShow = tvShowDao.findTVShowByTitle(searchTitle);
                 if (foundShow != null) {
-                    System.out.println("\nShow found:");
-                    System.out.println("Title: " + foundShow.getTitle());
-                    System.out.println("Total Episodes: " + foundShow.getTotalEpisodes());
+                    System.out.println("\nSHOW FOUND: " + foundShow.getTitle());
+                    System.out.println("Total Eps: " + foundShow.getTotalEpisodes());
                     int progress = getUserProgressForShow(sortByTitle, foundShow.getId());
                     System.out
                             .println("Progress: " + progress + "/" + foundShow.getTotalEpisodes());
