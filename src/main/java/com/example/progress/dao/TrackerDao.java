@@ -1,11 +1,12 @@
 package com.example.progress.dao;
 
 import com.example.progress.model.UserTVShowTracker;
+import com.example.progress.exception.TrackerNotFoundException;
 import java.util.List;
 
 public interface TrackerDao {
-
-    UserTVShowTracker findUserTrackerByUserId(int userId, int tvShowId);
+    UserTVShowTracker findUserTrackerByUserId(int userId, int tvShowId)
+            throws TrackerNotFoundException;
 
     List<UserTVShowTracker> findAllByStatus(int userId, String status);
 

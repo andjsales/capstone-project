@@ -345,7 +345,6 @@ public class App {
                     System.out.println("Invalid status.");
                     continue;
                 }
-                // Update status in DB
                 try (Connection conn = ConnectionManager.getConnection();
                         PreparedStatement stmt = conn.prepareStatement(
                                 "UPDATE UserTVShowTracker SET status = ? WHERE user_id = ? AND tv_show_id = ?")) {
@@ -443,8 +442,6 @@ public class App {
                         continue;
                     }
                 }
-                // update rating
-                // Check if tracker exists
                 UserTVShowTracker selectedTracker = null;
                 for (UserTVShowTracker t : sortByRating) {
                     if (t.getTvShowId() == selectedShow.getId()) {
@@ -454,11 +451,9 @@ public class App {
                 }
 
                 if (selectedTracker != null) {
-                    // Update existing tracker (just update the rating)
                     trackerDao.updateRating(userId, selectedShow.getId(), newRating);
                     System.out.println("\n> Rating updated successfully.");
                 } else {
-                    // Add new tracker with rating (default progress/status)
                     trackerDao.addUserTVShowTracker(userId, selectedShow.getId(), 0, "planning",
                             newRating);
                     System.out.println("\n> Rating added successfully.");
@@ -491,7 +486,6 @@ public class App {
                     continue;
                 }
                 TVShow selectedShow = allShows.get(idx);
-                // Delete from tracker
                 try (Connection conn = ConnectionManager.getConnection();
                         PreparedStatement stmt = conn.prepareStatement(
                                 "DELETE FROM UserTVShowTracker WHERE user_id = ? AND tv_show_id = ?")) {
@@ -608,7 +602,6 @@ public class App {
                 } else {
                     System.out.println("\n10——SORT BY RATING (All Shows):\n");
 
-                    // Step 1: Build a list of pairs (show, rating)
                     List<TVShow> showsCopy = new ArrayList<>(allShows);
                     showsCopy.sort((show1, show2) -> {
                         Integer rating1 = null;
@@ -619,7 +612,6 @@ public class App {
                             if (t.getTvShowId() == show2.getId())
                                 rating2 = t.getRating();
                         }
-                        // Sort: higher ratings first, nulls last
                         if (rating1 == null && rating2 == null)
                             return 0;
                         if (rating1 == null)
@@ -629,7 +621,6 @@ public class App {
                         return rating2.compareTo(rating1);
                     });
 
-                    // Step 2: Display the sorted list
                     for (int i = 0; i < showsCopy.size(); i++) {
                         TVShow show = showsCopy.get(i);
                         Integer rating = null;
