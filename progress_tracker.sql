@@ -68,3 +68,5 @@ INSERT INTO UserTVShowTracker (user_id, tv_show_id, progress, status, rating) VA
 (2, 8, 236, 'completed', 9),
 (2, 9, 5, 'watching', 7),
 (2, 10, 0, 'planning', NULL);
+
+ALTER TABLE User ADD COLUMN is_admin BOOLEAN DEFAULT FALSE;

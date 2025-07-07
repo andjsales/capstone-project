@@ -595,12 +595,12 @@ public class App {
                                 + ", Completed: " + completed);
                         System.out.println();
                     }
-                    }
                 }
+            }
 
 
 
-                // MARK: 10 — sort by rating
+            // MARK: 10 — sort by rating
 
             else if (choice.equals("10")) {
                 if (allShows.isEmpty()) {
@@ -696,8 +696,17 @@ public class App {
                         System.out.println("Planning: " + planning + ", Watching: " + watching
                                 + ", Completed: " + completed);
                         System.out.println();
+
                     }
                 }
+            }
+            if (loggedInUser.isAdmin()) {
+                System.out.println("12 - Admin: Add/Edit/Delete TV Shows");
+                System.out.println("Enter the number of the show to delete:");
+                int idx = Integer.parseInt(scanner.nextLine()) - 1;
+                TVShow showToDelete = allShows.get(idx);
+                // tvShowDao.deleteTVShow(showToDelete.getId());
+                System.out.println("Show deleted.");
             }
         }
     }

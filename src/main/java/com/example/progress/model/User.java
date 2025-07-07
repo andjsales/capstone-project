@@ -6,14 +6,15 @@ public class User {
     private String username; // map to SQL column `username`
     private String password; // map to SQL column `password`
 
-    // Empty CONSTRUCTOR——for JDBC/frameworks
+    // empty constructor—for JDBC/frameworks
     public User() {}
 
-    // CONSTRUCTOR——creating new User objects quickly
-    public User(int id, String username, String password) {
+    // constructor——creating new User objects quickly
+    public User(int id, String username, String password, boolean isAdmin) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.isAdmin = isAdmin;
     }
 
 
@@ -41,6 +42,17 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    // admin
+    private boolean isAdmin;
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     // toString() = how it prints in the console/debugger
