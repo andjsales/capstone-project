@@ -384,7 +384,7 @@ public class App {
                         Integer rating = null;
                         for (UserTVShowTracker t : sortByRating) {
                             if (t.getTvShowId() == show.getId()) {
-                                tracker = t;
+                                rating = t.getRating();
                                 break;
                             }
                         }
@@ -393,11 +393,15 @@ public class App {
                     }
                 }
 
-                // MARK: 8—SORT BY WATCH STATUS
-            } else if (choice.equals("8")) {
-                System.out
-                        .println("Enter status (planning, watching, completed) or 0 to go back: ");
+                // MARK: 11 — sort by status
+
+
+            } else if (choice.equals("11")) {
+
+                System.out.println("\nEnter status (planning, watching, completed)");
                 String filterStatus = scanner.nextLine().trim().toLowerCase();
+
+                // go back
                 if (filterStatus.equals("0"))
                     continue;
 
@@ -407,19 +411,21 @@ public class App {
                             "Invalid status. Please enter planning, watching, or completed.");
                     continue;
                 }
-                System.out.println("\nSORT BY STATUS (" + filterStatus + ")——");
+
+                System.out.println("\nSORT BY STATUS (" + filterStatus + ")——\n");
                 List<UserTVShowTracker> filterByStatus =
                         trackerDao.findAllByStatus(userId, filterStatus);
+
                 if (filterByStatus.isEmpty()) {
                     System.out.println("No shows found for that status.");
                 } else {
                     for (UserTVShowTracker tracker : filterByStatus) {
                         TVShow show = tvShowDao.findTVShowById(tracker.getTvShowId());
                         System.out.println("Title: " + show.getTitle());
-                        System.out.println("Progress: " + tracker.getProgress() + "/"
+                        System.out.println("—Progress: " + tracker.getProgress() + "/"
                                 + show.getTotalEpisodes());
-                        System.out.println("Status: " + tracker.getStatus());
-                        System.out.println("Rating: " + tracker.getRating());
+                        System.out.println("—Status: " + tracker.getStatus());
+                        System.out.println("—Rating: " + tracker.getRating());
                         System.out.println();
                     }
                 }
@@ -430,3 +436,5 @@ public class App {
         }
     }
 }
+
+
