@@ -15,6 +15,7 @@ import com.example.progress.dao.UserDao;
 import com.example.progress.dao.impl.TVShowDaoImpl;
 import com.example.progress.dao.impl.TrackerDaoImpl;
 import com.example.progress.dao.impl.UserDaoImpl;
+import com.example.progress.exception.AuthenticationException;
 import com.example.progress.model.TVShow;
 import com.example.progress.model.User;
 import com.example.progress.model.UserTVShowTracker;
@@ -61,15 +62,19 @@ public class App {
                 System.out.print("Password: ");
                 String password = scanner.nextLine();
                 // MARK: checking-credentials
-                loggedInUser = userDao.findByUsernameAndPassword(username, password);
+                try {
+                    loggedInUser = userDao.findByUsernameAndPassword(username, password);
 
-                if (loggedInUser != null) {
-                    System.out.println("\n—————————————————————————————————" + "\n\nWELCOME, "
-                            + loggedInUser.getUsername() + "!");
-                    System.out.println("(User ID: " + loggedInUser.getId() + ")");
-                    break; // exit login loop > continue
-                } else {
-                    System.out.println("\nIncorrect login——please try again.");
+                    if (loggedInUser != null) {
+                        System.out.println("\n—————————————————————————————————" + "\n\nWELCOME, "
+                                + loggedInUser.getUsername() + "!");
+                        System.out.println("(User ID: " + loggedInUser.getId() + ")");
+                        break; // exit login loop > continue
+                    } else {
+                        System.out.println("\nIncorrect login——please try again.");
+                    }
+                } catch (AuthenticationException e) {
+                    System.out.println("Authentication failed: " + e.getMessage());
                 }
 
             } else if (choice.equals("2")) {
@@ -77,24 +82,26 @@ public class App {
                 String newUsername = scanner.nextLine().trim();
                 System.out.print("Choose a password: ");
                 String newPassword = scanner.nextLine().trim();
-
-                User existingUser = userDao.findByUsernameAndPassword(newUsername, newPassword);
-                if (existingUser != null) {
-                    System.out.println("Username taken. Pick another username.");
-                } else {
-                    String sql = "INSERT INTO User (username, password) VALUES (?, ?)";
-                    try (Connection conn = ConnectionManager.getConnection();
-                            PreparedStatement stmt = conn.prepareStatement(sql)) {
-                        stmt.setString(1, newUsername);
-                        stmt.setString(2, newPassword);
-                        stmt.executeUpdate();
-                        System.out.println("\nAccount creation success! You can log in.");
-                    } catch (Exception e) {
-                        System.out.println("Problem creating account.");
-                        e.printStackTrace();
+                try {
+                    User existingUser = userDao.findByUsernameAndPassword(newUsername, newPassword);
+                    if (existingUser != null) {
+                        System.out.println("Username taken. Pick another username.");
+                    } else {
+                        String sql = "INSERT INTO User (username, password) VALUES (?, ?)";
+                        try (Connection conn = ConnectionManager.getConnection();
+                                PreparedStatement stmt = conn.prepareStatement(sql)) {
+                            stmt.setString(1, newUsername);
+                            stmt.setString(2, newPassword);
+                            stmt.executeUpdate();
+                            System.out.println("\nAccount creation success! You can log in.");
+                        } catch (SQLException e) {
+                            System.out.println("Database error during account creation.");
+                            e.printStackTrace();
+                        }
                     }
+                } catch (AuthenticationException e) {
+                    System.out.println("Authentication failed: " + e.getMessage());
                 }
-
             } else if (choice.equals("3")) {
                 System.out.println("bye byee!");
                 System.exit(0);
@@ -442,6 +449,8 @@ public class App {
                         continue;
                     }
                 }
+                // update rating
+                // Check if tracker exists
                 UserTVShowTracker selectedTracker = null;
                 for (UserTVShowTracker t : sortByRating) {
                     if (t.getTvShowId() == selectedShow.getId()) {
