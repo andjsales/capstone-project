@@ -30,6 +30,11 @@ Includes three main tables:
 2. **TVShow**: catalog of shows with total episodes
 3. **UserTVShowTracker**: tracks users’ show progress, watch status, and ratings
 
+## Example Login
+
+Username: testaccount
+Password: password123
+
 ## Setup Instructions
 
 1. **Install MySQL** and create the database:
@@ -39,12 +44,12 @@ Includes three main tables:
    ```
 
 2. **Check config properties:**
-   Ensure your `config.properties` file matches your MySQL login:
+   Make sure `config.properties` file matches your MySQL login:
 
    ```properties
    url=jdbc:mysql://localhost:3306/progress_tracker?serverTimezone=EST5EDT
-   username=your_mysql_username
-   password=your_mysql_password
+   username=
+   password=
    ```
 
 3. **Build and Run**
@@ -60,34 +65,3 @@ Includes three main tables:
 - Writing and executing SQL scripts for schema design and seed data
 - Managing database connections securely through config files
 - Applying object-oriented design in real-world CRUD apps
-
-## Future Improvements
-
-- Add support for tracking books or music
-- Implement user registration
-- Create a GUI (JavaFX or Swing)
-- Secure passwords using hashing algorithms
-- add a Movies entity
-
-## Methods to add
-
-- addTVShowToList()
-- updateTVShowWatchStatus()
-- updateTVShowRating()
-- updateTVShowProgress()
-- fix findAllShows() method
-
-## console menu——order of operations
-
-1. login/exit——choose an option (1 or 2)
-2. type in username——enter
-3. type in password——enter
-4. WELCOME
-5. 1•view all shows——2•view all currently watching——choose an option
-6. if 1——return all show titles——progress——total eps
-7. if 2——return all currently watching——title——progress——status——rating
-
-## next steps
-
-8. method to add shows——ask for title——progress——status——rating
-9.

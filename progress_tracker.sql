@@ -41,8 +41,8 @@ CREATE TABLE UserTVShowTracker (
 );
 
 INSERT INTO User (username, password) VALUES -- sample user data
-('amberglory', 'rootroot123'),
-('andrewsales', 'password123');
+('andrewsales', 'rootroot123'),
+('testaccount', 'password123');
 
 INSERT INTO TVShow (title, total_episodes) VALUES -- sample TV shows data
 ('Love Island', 123),
