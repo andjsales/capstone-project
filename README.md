@@ -1,4 +1,4 @@
-# Progress Tracker - Java Backend Capstone Project
+# TV-Show Progress Tracker
 
 A console-based Java application for tracking movies and TV shows. Users can organize their watchlist by status ("Plan to Watch," "Watching," "Completed"), update progress, and rate completed shows.
 
