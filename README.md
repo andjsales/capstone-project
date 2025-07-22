@@ -7,13 +7,13 @@ A console-based Java application for tracking movies and TV shows. Users can org
 
 This capstone demonstrates entry-level Java backend skills:
 
-- **Object-Oriented Programming** with encapsulated models
-- **MySQL Database Design** with normalized tables
-- **JDBC & DAO Pattern** for clean data access
-- **Custom Exception Handling** for robust error management
-- **Maven Project Management** for dependencies
-- **Git Version Control**
-- **Console Interface** with user-friendly menus
+- Object-Oriented Programming with encapsulated models
+- MySQL Database Design with normalized tables
+- JDBC & DAO Pattern for clean data access
+- Custom Exception Handling for robust error management
+- Maven Project Management for dependencies
+- Git Version Control
+- Console Interface with user-friendly menus
 
 
 ## ✅ Requirements Met
@@ -122,7 +122,7 @@ mvn exec:java -Dexec.mainClass="com.example.progress.App"
 3. Exit
 ```
 
-After login:
+After logging in:
 
 ```
 0 - Go back
