@@ -2,7 +2,6 @@
 
 A console-based Java application for tracking movies and TV shows. Users can organize their watchlist by status ("Plan to Watch," "Watching," "Completed"), update progress, and rate completed shows.
 
----
 
 ## 🎯 Project Overview
 
@@ -16,7 +15,6 @@ This capstone demonstrates entry-level Java backend skills:
 - **Git Version Control**
 - **Console Interface** with user-friendly menus
 
----
 
 ## ✅ Requirements Met
 
@@ -41,7 +39,6 @@ This capstone demonstrates entry-level Java backend skills:
 - Show statistics (average rating, user counts)
 - Admin account support
 
----
 
 ## 💾 Database Design
 
@@ -69,8 +66,6 @@ USER (1) ←→ (N) USER_TVSHOW_TRACKER (N) ←→ (1) TVSHOW
 
 - 10 popular TV shows (Breaking Bad, The Office, etc.)
 - 2 test users with sample progress and ratings
-
----
 
 ## 🚀 Setup Instructions
 
@@ -111,8 +106,6 @@ mvn clean compile
 mvn exec:java -Dexec.mainClass="com.example.progress.App"
 ```
 
----
-
 ## 🖥️ Runtime Instructions
 
 ### Starting the Application
@@ -146,8 +139,6 @@ After login:
 11 - Sort by status
 ```
 
----
-
 ## 📊 Feature Walkthrough
 
 - **Add to Watchlist**: Add new shows and set initial progress/status
@@ -160,7 +151,6 @@ After login:
 - **Sort/Filter**: Organize your watchlist by title, rating, or status
 - **Admin Features**: Add/edit/delete shows (if logged in as admin)
 
----
 
 ## 🧪 Testing Data
 
@@ -173,14 +163,13 @@ After login:
 
 - Love Island, Breaking Bad, The Office, Game of Thrones, Friends, etc.
 
----
 
 ## 🔧 Custom Exceptions
 
 - **AuthenticationException**: Thrown for invalid login attempts
 - **TrackerNotFoundException**: Thrown when accessing non-existent tracker data
 
----
+
 
 ## 🛠️ Technical Highlights
 
@@ -190,7 +179,7 @@ After login:
 - **Object-Oriented Design**: Encapsulated models
 - **Normalized Database**: Foreign keys, ENUMs, constraints
 
----
+
 
 ## 📋 Git Workflow
 
@@ -202,7 +191,7 @@ git push origin feature/add-rating
 # Create pull request on GitHub
 ```
 
----
+
 
 ## 🚀 Future Enhancements
 
@@ -212,7 +201,7 @@ git push origin feature/add-rating
 - JUnit test coverage
 - Docker deployment
 
----
+
 
 ## 🎓 Learning Objectives Achieved
 
@@ -222,7 +211,3 @@ git push origin feature/add-rating
 - ✓ DAO and Singleton patterns
 - ✓ Maven project management
 - ✓ SQL schema design and normalization
-
----
-
-**Progress Tracker** - Demonstrating Java backend development skills for entry-level positions. 🚀
