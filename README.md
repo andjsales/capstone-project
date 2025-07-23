@@ -1,32 +1,28 @@
 # TV-Show Progress Tracker
 
-A console-based Java application for tracking movies and TV shows. Users can organize their watchlist by status ("Plan to Watch," "Watching," "Completed"), update progress, and rate completed shows.
+This is a console-based Java application for tracking TV shows. Users are able to organize their watchlist by status ("Plan to Watch," "Watching," "Completed"), update progress, and rate completed shows.
 
-
-## 🎯 Project Overview
-
-This capstone demonstrates entry-level Java backend skills:
+## Project Overview
 
 - Object-Oriented Programming with encapsulated models
-- MySQL Database Design with normalized tables
+- MySQL Database Design 
 - JDBC & DAO Pattern for clean data access
-- Custom Exception Handling for robust error management
+- Custom Exception Handling 
 - Maven Project Management for dependencies
 - Git Version Control
-- Console Interface with user-friendly menus
+- Console Interface
 
-
-## ✅ Requirements Met
+## Requirements Met
 
 ### Core Requirements
 
 - Console-based menu interface
-- User authentication (login with username/password)
-- Personal watchlist tracking (plan to watch/watching/completed)
+- User authentication (logging in with username/password)
+- Personal tracking (plan to watch/watching/completed)
 - User-specific data access and security
-- MySQL database with normalized schema
-- JDBC & DAO pattern implementation
-- 2 custom exceptions (AuthenticationException, TrackerNotFoundException)
+- MySQL database
+- JDBC & DAO pattern 
+- 2 custom exceptions
 - 10 sample shows seeded in the database
 - Git version control ready
 
@@ -38,15 +34,6 @@ This capstone demonstrates entry-level Java backend skills:
 - Sort/filter by status, rating, and title
 - Show statistics (average rating, user counts)
 - Admin account support
-
-
-## 💾 Database Design
-
-### ER Diagram Overview
-
-```
-USER (1) ←→ (N) USER_TVSHOW_TRACKER (N) ←→ (1) TVSHOW
-```
 
 ### Tables
 
@@ -62,12 +49,7 @@ USER (1) ←→ (N) USER_TVSHOW_TRACKER (N) ←→ (1) TVSHOW
    - `id` (PK), `user_id` (FK), `tv_show_id` (FK)
    - `progress`, `status` (ENUM), `rating`
 
-### Sample Data Included
-
-- 10 popular TV shows (Breaking Bad, The Office, etc.)
-- 2 test users with sample progress and ratings
-
-## 🚀 Setup Instructions
+## Setup Instructions
 
 ### Prerequisites
 
@@ -76,14 +58,14 @@ USER (1) ←→ (N) USER_TVSHOW_TRACKER (N) ←→ (1) TVSHOW
 - Maven 3.6+
 - Git
 
-### 1. Clone Repository
+### 1. Copy link and clone the repository
 
 ```bash
-git clone <your-repo-url>
+git clone <link>
 cd capstone-project
 ```
 
-### 2. Database Setup
+### 2. Setup the database
 
 ```bash
 mysql -u root -p < progress_tracker.sql
@@ -91,7 +73,8 @@ mysql -u root -p < progress_tracker.sql
 
 ### 3. Configure Database Connection
 
-Edit `src/main/resources/config.properties`:
+Edit the file: config.properties
+`src/main/resources/config.properties`
 
 ```properties
 url=jdbc:mysql://localhost:3306/progress_tracker?serverTimezone=EST5EDT
@@ -106,14 +89,11 @@ mvn clean compile
 mvn exec:java -Dexec.mainClass="com.example.progress.App"
 ```
 
-## 🖥️ Runtime Instructions
-
 ### Starting the Application
 
-- Run with Maven: `mvn exec:java`
-- Follow console prompts for login, account creation, and menu navigation
+- `mvn exec:java`
 
-### Main Menu Example
+### Main Menu Example Demo
 
 ```
 ===== Your Personal Watchlist =====
@@ -122,7 +102,7 @@ mvn exec:java -Dexec.mainClass="com.example.progress.App"
 3. Exit
 ```
 
-After logging in:
+(After logging in)
 
 ```
 0 - Go back
@@ -139,7 +119,7 @@ After logging in:
 11 - Sort by status
 ```
 
-## 📊 Feature Walkthrough
+## Feature Walkthrough
 
 - **Add to Watchlist**: Add new shows and set initial progress/status
 - **Rate a Show**: Rate completed or in-progress shows (1-10)
@@ -151,27 +131,19 @@ After logging in:
 - **Sort/Filter**: Organize your watchlist by title, rating, or status
 - **Admin Features**: Add/edit/delete shows (if logged in as admin)
 
+## Testing Data
 
-## 🧪 Testing Data
-
-**Test Accounts:**
+**Available Test Accounts:**
 
 - Username: `testaccount`, Password: `password123`
 - Username: `andrewsales`, Password: `rootroot123`
 
-**Sample Shows:**
-
-- Love Island, Breaking Bad, The Office, Game of Thrones, Friends, etc.
-
-
-## 🔧 Custom Exceptions
+## Custom Exceptions
 
 - **AuthenticationException**: Thrown for invalid login attempts
 - **TrackerNotFoundException**: Thrown when accessing non-existent tracker data
 
-
-
-## 🛠️ Technical Highlights
+## Technical Highlights
 
 - **DAO Pattern**: Interface-based data access
 - **PreparedStatements**: Prevent SQL injection
@@ -179,21 +151,7 @@ After logging in:
 - **Object-Oriented Design**: Encapsulated models
 - **Normalized Database**: Foreign keys, ENUMs, constraints
 
-
-
-## 📋 Git Workflow
-
-```bash
-git checkout -b feature/add-rating
-git add .
-git commit -m "Add user rating feature"
-git push origin feature/add-rating
-# Create pull request on GitHub
-```
-
-
-
-## 🚀 Future Enhancements
+## Future Enhancements
 
 - REST API (Spring Boot)
 - Web frontend (React/Angular)
@@ -203,11 +161,11 @@ git push origin feature/add-rating
 
 
 
-## 🎓 Learning Objectives Achieved
+## Learning Objectives Achieved
 
-- ✓ Object-oriented programming
-- ✓ Exception handling
-- ✓ JDBC database connectivity
-- ✓ DAO and Singleton patterns
-- ✓ Maven project management
-- ✓ SQL schema design and normalization
+- Object-oriented programming
+- Exception handling
+- JDBC database connectivity
+- DAO and Singleton patterns
+- Maven project management
+- SQL schema design and normalization
