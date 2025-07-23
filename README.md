@@ -26,15 +26,6 @@ This is a console-based Java application for tracking TV shows. Users are able t
 - 10 sample shows seeded in the database
 - Git version control ready
 
-### Extensions Implemented
-
-- Maven project structure
-- User rating system (1-10 scale)
-- Account creation functionality
-- Sort/filter by status, rating, and title
-- Show statistics (average rating, user counts)
-- Admin account support
-
 ### Tables
 
 1. **User** - Stores user accounts and authentication
@@ -49,7 +40,7 @@ This is a console-based Java application for tracking TV shows. Users are able t
    - `id` (PK), `user_id` (FK), `tv_show_id` (FK)
    - `progress`, `status` (ENUM), `rating`
 
-## Setup Instructions
+## Setup
 
 ### Prerequisites
 
@@ -71,9 +62,9 @@ cd capstone-project
 mysql -u root -p < progress_tracker.sql
 ```
 
-### 3. Configure Database Connection
+### 3. Configure the Database Connection
 
-Edit the file: config.properties
+Edit this file: config.properties
 `src/main/resources/config.properties`
 
 ```properties
@@ -82,7 +73,7 @@ username=your_mysql_username
 password=your_mysql_password
 ```
 
-### 4. Build and Run
+### 4. Compile and Run
 
 ```bash
 mvn clean compile
@@ -93,7 +84,7 @@ mvn exec:java -Dexec.mainClass="com.example.progress.App"
 
 - `mvn exec:java`
 
-### Main Menu Example Demo
+### Main Menu Demo
 
 ```
 ===== Your Personal Watchlist =====
@@ -119,7 +110,7 @@ mvn exec:java -Dexec.mainClass="com.example.progress.App"
 11 - Sort by status
 ```
 
-## Feature Walkthrough
+## Features
 
 - **Add to Watchlist**: Add new shows and set initial progress/status
 - **Rate a Show**: Rate completed or in-progress shows (1-10)
@@ -143,7 +134,7 @@ mvn exec:java -Dexec.mainClass="com.example.progress.App"
 - **AuthenticationException**: Thrown for invalid login attempts
 - **TrackerNotFoundException**: Thrown when accessing non-existent tracker data
 
-## Technical Highlights
+## Highlights
 
 - **DAO Pattern**: Interface-based data access
 - **PreparedStatements**: Prevent SQL injection
@@ -151,21 +142,3 @@ mvn exec:java -Dexec.mainClass="com.example.progress.App"
 - **Object-Oriented Design**: Encapsulated models
 - **Normalized Database**: Foreign keys, ENUMs, constraints
 
-## Future Enhancements
-
-- REST API (Spring Boot)
-- Web frontend (React/Angular)
-- JWT authentication
-- JUnit test coverage
-- Docker deployment
-
-
-
-## Learning Objectives Achieved
-
-- Object-oriented programming
-- Exception handling
-- JDBC database connectivity
-- DAO and Singleton patterns
-- Maven project management
-- SQL schema design and normalization
